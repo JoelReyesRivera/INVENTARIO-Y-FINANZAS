@@ -9,25 +9,17 @@ public class Cliente extends Persona{
     private int totalCompras;
     private static int contador=0;
     
-    public Cliente(String nombre, String apellido, long telefono, String RFC, String email,int totalCompras ){
-        super(nombre,apellido,telefono, RFC, email);
+    public Cliente(String nombre, String apellido, long telefono, String RFC,int totalCompras ){
+        super(nombre,apellido,telefono, RFC);
         contador++;
         this.idCliente=contador;
         this.totalCompras=totalCompras;   
         
     }
     
-    // Sin RFC y Email
+    // Sin RFC
     public Cliente(String nombre, String apellido, long telefono,int totalCompras ){
         super(nombre,apellido,telefono );
-        contador++;
-        this.idCliente=contador;
-        this.totalCompras=totalCompras;
-    }
-    
-     // Sin RFC
-    public Cliente(String nombre, String apellido, long telefono,String email,int totalCompras ){
-        super(nombre,apellido,telefono,email );
         contador++;
         this.idCliente=contador;
         this.totalCompras=totalCompras;
@@ -51,7 +43,6 @@ public class Cliente extends Persona{
     
     @Override
     public String toString() {
-        super.toString();
-        return "\nID Cliente: "+idCliente+"\nTotal de compras: "+totalCompras;
+        return super.toString()+"\nID Cliente: "+idCliente+"\nTotal de compras: "+totalCompras;
     }
 }

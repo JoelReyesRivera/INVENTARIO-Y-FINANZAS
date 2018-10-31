@@ -9,31 +9,20 @@ public class Persona {
     private String apellido;
     private long telefono;
     private String RFC;
-    private String email;
-
     
     // Datos Completos
-    public Persona(String nombre, String apellido, long telefono, String RFC, String email) {
+    public Persona(String nombre, String apellido, long telefono, String RFC) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.RFC = RFC;
-        this.email = email;
     }
 
-    // Sin RFC y Email
+    // Sin RFC
     public Persona(String nombre, String apellido, long telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
-    }
-
-    // Sin RFC
-    public Persona(String nombre, String apellido, long telefono, String email) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.email = email;
     }
     
     public String getNombre() {
@@ -68,17 +57,9 @@ public class Persona {
         this.RFC = RFC;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
-        return "\nNombre: "+nombre+"\nApellido: "+apellido+"\nTelefono: "+telefono + "\nRFC: "+RFC+"\nEmail: "+email;
+        return "\nNombre: "+nombre+"\nApellido: "+apellido+"\nTelefono: "+telefono + "\nRFC: "+RFC;
     }
     
 

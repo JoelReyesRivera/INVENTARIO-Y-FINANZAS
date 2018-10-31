@@ -7,28 +7,23 @@ public class Empleado extends Persona {
 
     private int idEmpleado;
     private double sueldo;
-    private static int aIdE;
+    private static int contIdE=1;
 
-    public Empleado(String nombre, String apellido, long telefono, String RFC, String email, int idEmpleado,double sueldo) {
-        super(nombre, apellido, telefono, RFC, email);
-        this.idEmpleado = idEmpleado;
+    public Empleado(String nombre, String apellido, long telefono, String RFC,double sueldo) {
+        super(nombre, apellido, telefono, RFC);
+        this.idEmpleado = contIdE;
         this.sueldo=sueldo;
-    }
-
-    // Sin RFC y Email
-    public Empleado(String nombre, String apellido, long telefono, int idEmpleado, double sueldo) {
-        super(nombre, apellido, telefono);
-        this.idEmpleado = idEmpleado;
-        this.sueldo=sueldo;
+        contIdE++;
     }
 
     // Sin RFC
-    public Empleado(String nombre, String apellido, long telefono, String email, int idEmpleado,double sueldo) {
-        super(nombre, apellido, telefono, email);
-        this.idEmpleado = idEmpleado;
+    public Empleado(String nombre, String apellido, long telefono, double sueldo) {
+        super(nombre, apellido, telefono);
+        this.idEmpleado = contIdE;
         this.sueldo=sueldo;
+        contIdE++;
     }
-
+    
     public int getIdEmpleado() {
         return idEmpleado;
     }
@@ -36,7 +31,7 @@ public class Empleado extends Persona {
     public double getSueldo(){
         return sueldo;
     }
-    public void setIdSueldo(double sueldo) {
+    public void setSueldo(double sueldo) {
         this.sueldo = sueldo;
     }
     public void setIdEmpleado(int idEmpleado) {
@@ -45,7 +40,6 @@ public class Empleado extends Persona {
 
     @Override
     public String toString() {
-        super.toString();
-        return "\nID Empleado: " + idEmpleado;
+        return super.toString()+"\nID Empleado: " + idEmpleado+"\nSueldo: "+sueldo;
     }
 }
