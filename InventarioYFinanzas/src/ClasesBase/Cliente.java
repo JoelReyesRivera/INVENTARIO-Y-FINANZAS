@@ -7,26 +7,29 @@ public class Cliente extends Persona{
     
     private int idCliente;
     private int totalCompras;
-    private static int contador;
+    private static int contador=0;
     
-    public Cliente(String nombre, String apellido, long telefono, String RFC, String email,int idCliente,int totalCompras ){
+    public Cliente(String nombre, String apellido, long telefono, String RFC, String email,int totalCompras ){
         super(nombre,apellido,telefono, RFC, email);
-        this.idCliente=idCliente;
-        this.totalCompras=totalCompras;   
         contador++;
+        this.idCliente=contador;
+        this.totalCompras=totalCompras;   
+        
     }
     
     // Sin RFC y Email
-    public Cliente(int idCliente, String nombre, String apellido, long telefono,int totalCompras ){
+    public Cliente(String nombre, String apellido, long telefono,int totalCompras ){
         super(nombre,apellido,telefono );
-        this.idCliente=idCliente;
+        contador++;
+        this.idCliente=contador;
         this.totalCompras=totalCompras;
     }
     
      // Sin RFC
-    public Cliente(int idCliente, String nombre, String apellido, long telefono,String email,int totalCompras ){
+    public Cliente(String nombre, String apellido, long telefono,String email,int totalCompras ){
         super(nombre,apellido,telefono,email );
-        this.idCliente=idCliente;
+        contador++;
+        this.idCliente=contador;
         this.totalCompras=totalCompras;
     }
     

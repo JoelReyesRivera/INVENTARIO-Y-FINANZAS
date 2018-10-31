@@ -1,5 +1,4 @@
 package ClasesBase;
-// JOEL SE LA COME
 /**
  *
  * @author jasiel
