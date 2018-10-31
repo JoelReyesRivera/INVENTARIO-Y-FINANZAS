@@ -4,7 +4,7 @@
 //  Facilitates keyboard input by abstracting details about input
 //  parsing, conversions, and exception handling.
 //********************************************************************
-package utilidad;
+package Utileria;
 
 import java.io.*;
 import java.util.*;

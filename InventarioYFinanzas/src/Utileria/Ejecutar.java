@@ -1,4 +1,4 @@
-package utilidad;
+package Utileria;
 
 /**
  *      ITNM - Campus Culiacan

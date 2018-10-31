@@ -1,6 +1,6 @@
-package manejadora;
+package Manejadoras;
 
-import base.Producto;
+import ClasesBase.Producto;
 import java.util.ArrayList;
 
 public class ManejaInventario {

@@ -1,5 +1,5 @@
-package manejadora;
-import base.Persona;
+package Manejadoras;
+import ClasesBase.Persona;
 import java.util.ArrayList;
 
 /**

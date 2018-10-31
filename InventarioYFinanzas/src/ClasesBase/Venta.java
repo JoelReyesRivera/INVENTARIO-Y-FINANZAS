@@ -1,4 +1,4 @@
-package base;
+package ClasesBase;
 /**
  *
  * @author jasiel

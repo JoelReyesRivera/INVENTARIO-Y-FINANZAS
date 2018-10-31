@@ -1,4 +1,4 @@
-package manejadora;
+package Manejadoras;
 
 /**
  *
