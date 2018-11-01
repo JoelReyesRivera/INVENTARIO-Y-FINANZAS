@@ -49,7 +49,7 @@ public class Ejecutar {
         String nombreCliente, apellidoCliente, rfcCliente, emailCliente, SKU;
         long telefonoCliente;
         
-        System.out.println("\n- Ingrese los datos de la venta -\n");
+        System.out.println("\n- INGRESE LOS DATOS DE LA VENTA -\n");
         do {
             System.out.println("El cliente esta registrado en el sistema (1.- Si/2.- No)");
             cR=Keyboard.readInt();
