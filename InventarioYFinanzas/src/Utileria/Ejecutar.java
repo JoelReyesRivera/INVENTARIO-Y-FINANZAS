@@ -1,7 +1,6 @@
 package Utileria;
 
 import ClasesBase.Empleado;
-import ClasesBase.Cliente;
 import Manejadoras.ManejaPersonas;
 
 /**
@@ -51,24 +50,24 @@ public class Ejecutar {
         
         System.out.println("\n- INGRESE LOS DATOS DE LA VENTA -\n");
         do {
-            System.out.println("El cliente esta registrado en el sistema (1.- Si/2.- No)");
+            System.out.println("EL CLIENTE ESTA REGISTRADO (1.- SI/2.- NO)");
             cR=Keyboard.readInt();
             System.out.println("");
             if (cR == 1) {
                 int idCliente;
                 do {
-                    System.out.println("Ingrese el ID del cliente.");
+                    System.out.println("INGRESE EL ID DEL CLIENTE.");
                     idCliente=Keyboard.readInt();
                     if (manejaPersona.buscarCliente(cR)!=-1) {
-                        System.out.println("\033[31mEl ID ingresado no existe.\n\033[34m");
+                        System.out.println("\033[31mEL ID INGRESADO NO EXISTE.\n\033[34m");
                     }
-                } while (manejaPersona.buscarCliente(cR)!=-1); // Cambiar esta condicion por buscarCliente(idCliente)!=-1
+                } while (manejaPersona.buscarCliente(cR)!=-1);
                 /*
-                nombreCliente=manejaPersonas.cliente[idCliente].getNombre();
-                apellidoCliente=manejaPersonas.cliente[idCliente].getApellido();
-                rfcCliente=manejaPersonas.cliente[idCliente].getRFC();
-                telefonoCliente=manejaPersonas.cliente[idCliente].getTelefono();
-                emailCliente=manejaPersonas.cliente[idCliente].getEmail();
+                int pos=manejaPersona.buscarCliente(cR);
+                nombreCliente=manejaPersona.personas.get(pos).getNombre();
+                apellidoCliente=manejaPersona.personas.get(pos).getApellido();
+                rfcCliente=manejaPersona.personas.get(pos).getRFC();
+                telefonoCliente=manejaPersona.personas.get(pos).getTelefono();
                 */
             } else {
                 do { 
