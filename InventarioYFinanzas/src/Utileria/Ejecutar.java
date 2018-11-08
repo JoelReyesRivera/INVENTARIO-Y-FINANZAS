@@ -3,6 +3,8 @@ package Utileria;
 import ClasesBase.Empleado;
 import ClasesBase.Cliente;
 import Manejadoras.ManejaPersonas;
+import Manejadoras.ManejaVentas;
+import Manejadoras.ManejaFinanzas;
 
 /**
  *      ITNM - Campus Culiacan
@@ -16,7 +18,8 @@ public class Ejecutar {
         
         Ejecutar main = new Ejecutar();
         ManejaPersonas manejaPersona = new ManejaPersonas();
-        
+        ManejaFinanzas manejaFinanza=new ManejaFinanzas();
+                
         System.out.println("\033[34m------------ BIENVENIDO ------------\n\033[34m");
         
         int key;
@@ -29,7 +32,7 @@ public class Ejecutar {
                     main.vender(manejaPersona);
                     break;
                 case 2:
-                    System.out.println("2");
+                    main.menuFinanzas(manejaFinanza);
                     break;
                 case 4:
                     main.menuEmpleados(manejaPersona);
@@ -129,9 +132,40 @@ public class Ejecutar {
         } while (SKU.trim().isEmpty());
     }
     
-    public void menuFinanzas(){
-        
-    }
+    public void menuFinanzas( ManejaFinanzas ManejaFinanza){
+    int opcion = 0;
+        do {
+            System.out.println();
+            System.out.println("***************¿Que desea hacer?****************");
+            System.out.println("OPCIÓN 1-----------Buscar ganancias del dia");
+            System.out.println("OPCIÓN 2-----------Buscar ganancias de un mes");
+            System.out.println("OPCIÓN 0-----------Salir");
+            System.out.print("Introduce la opción: ");
+            opcion = Keyboard.readInt();
+            switch (opcion) {
+                case 1:
+                    int d,m,a;
+                    System.out.println("Escribe el dia");
+                    d=Keyboard.readInt();
+                    System.out.println("Escribe el mes");
+                    m=Keyboard.readInt();
+                    System.out.println("Escribe el año");
+                    a=Keyboard.readInt();
+                    ManejaFinanza.Ventadia(d, m, a);
+                 break;
+                case 2:
+                    System.out.println("Escribe el mes");
+                    m=Keyboard.readInt();
+                  ManejaFinanza.VentaMes(m);
+                     break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("*Introduce una opción válida*");
+            }
+        } while (opcion != 0);
+    }    
+
     
     public void menuProductos(){
         

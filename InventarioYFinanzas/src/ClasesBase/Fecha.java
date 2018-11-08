@@ -10,9 +10,9 @@ package ClasesBase;
  * @author jasiel
  */
 public class Fecha {
-    private int dia;
-    private int mes;
-    private int año;
+    private int dia=8;
+    private int mes=11;
+    private int año=2018;
 
     //Constructor por defecto
     public Fecha() {
