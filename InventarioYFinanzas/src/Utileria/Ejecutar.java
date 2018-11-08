@@ -1,5 +1,5 @@
 package Utileria;
-
+// Jasiel pendejo
 import ClasesBase.Empleado;
 import Manejadoras.ManejaPersonas;
 
