@@ -1,8 +1,5 @@
 package ClasesBase;
 
-/**
- * @author oliverrood
- */
 public class Producto {
 
     private int SKU;

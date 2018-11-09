@@ -152,7 +152,7 @@ public class Keyboard
         }
         catch (Exception exception) 
         {  
-            error("Error reading String data, null value returned.");
+            error("");
             str = null;
         }
 
@@ -247,7 +247,7 @@ public class Keyboard
         } 
         catch (Exception exception) 
         {  
-            error ("Error reading int data, MIN_VALUE value returned.");
+            error ("");
             value = Integer.MIN_VALUE;
         }
 
@@ -305,7 +305,7 @@ public class Keyboard
         } 
         catch (Exception exception) 
         {  
-            error ("Error reading double data, NaN value returned.");
+            error ("");
             value = Double.NaN;
         }
 

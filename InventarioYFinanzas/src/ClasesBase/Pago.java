@@ -1,8 +1,5 @@
 package ClasesBase;
-/**
- *
- * @author jasiel
- */
+
 public class Pago {
 
     private String Metodo;

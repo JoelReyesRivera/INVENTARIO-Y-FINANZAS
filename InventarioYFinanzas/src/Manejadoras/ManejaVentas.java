@@ -1,6 +1,5 @@
 package Manejadoras;
 
-
 import ClasesBase.Empleado;
 import java.util.ArrayList;
 import ClasesBase.Venta; 
@@ -9,8 +8,9 @@ import Utileria.Keyboard;
 
 
 public class ManejaVentas {
+    
     public ArrayList <Venta> Ventas;
-     public Fecha f=new Fecha(8,11,2018);
+    public Fecha f=new Fecha(8,11,2018);
     
     //CONSTRUCTOR
      public ManejaVentas(){
@@ -36,7 +36,7 @@ public class ManejaVentas {
     //IMPRIMIR
    public void Imprimir(){ 
        for(int i=0;i<Ventas.size();i++){
-           System.out.println("VENTA NUMERO :"+(i + 1) + ":" + "\n" + Ventas.get(i));
+           System.out.println("VENTA NUMERO :"+(i + 1)+ "\n" + Ventas.get(i));
        }
    }
        

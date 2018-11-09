@@ -1,47 +1,44 @@
 package ClasesBase;
 
-/**
- *
- * @author jasiel
- */
-public class Textil extends Producto{
+public class Textil extends Producto {
+
     private String tela;
     private String corte;
     private int talla;
-    
-    public Textil(int SKU,double PrecioUni, int Existencia,String tela,String corte,int talla){
-        super(SKU,PrecioUni,Existencia);
-        this.tela=tela;
-        this.corte=corte;
-        this.talla=talla;
+
+    public Textil(int SKU, double PrecioUni, int Existencia, String tela, String corte, int talla) {
+        super(SKU, PrecioUni, Existencia);
+        this.tela = tela;
+        this.corte = corte;
+        this.talla = talla;
     }
-    
-    public String getTela(){
+
+    public String getTela() {
         return tela;
     }
-    
-    public void SetTela(String tela){
-        this.tela=tela;
+
+    public void SetTela(String tela) {
+        this.tela = tela;
     }
-    
-    public String getCorte(){
+
+    public String getCorte() {
         return corte;
     }
-    
-    public void SetCorte(String corte){
-        this.corte=corte;
+
+    public void SetCorte(String corte) {
+        this.corte = corte;
     }
-    
-    public int getTalla(){
+
+    public int getTalla() {
         return talla;
     }
-    
-    public void SetTalla(int talla){
-        this.talla=talla;
+
+    public void SetTalla(int talla) {
+        this.talla = talla;
     }
-    
-     @Override
+
+    @Override
     public String toString() {
-        return (super.toString()+"\nTELA: "+tela+"\nCORTE: "+corte+"\nTALLA: "+talla).toUpperCase();
+        return (super.toString() + "\nTELA: " + tela + "\nCORTE: " + corte + "\nTALLA: " + talla).toUpperCase();
     }
 }

@@ -5,10 +5,6 @@ import ClasesBase.Empleado;
 import ClasesBase.Persona;
 import java.util.ArrayList;
 
-/**
- *
- * @author ADM-PC
- */
 public class ManejaPersonas {
 
     public ArrayList<Persona> personas;

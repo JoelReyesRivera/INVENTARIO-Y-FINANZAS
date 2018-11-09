@@ -1,9 +1,7 @@
 package ClasesBase;
-/**
- *
- * @author jasiel
- */
+
 public class Venta {
+
     private String ClaveVta;
     private int SKUArt;
     private int Cantidad;
@@ -13,7 +11,7 @@ public class Venta {
     private int año;
     private int idCliente;
 
-    public Venta(String ClaveVta, int SKUArt, int Cantidad, double PrecioUni,int dia, int mes, int año, int IdCliente) {
+    public Venta(String ClaveVta, int SKUArt, int Cantidad, double PrecioUni, int dia, int mes, int año, int idCliente) {
         this.ClaveVta = ClaveVta;
         this.SKUArt = SKUArt;
         this.Cantidad = Cantidad;
@@ -21,18 +19,19 @@ public class Venta {
         this.dia = dia;
         this.mes = mes;
         this.año = año;
-        this.idCliente=idCliente;
-    }   
-    
-    public void setIdCliente(int idCliente){
-         this.idCliente=idCliente;
+        this.idCliente = idCliente;
     }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public void setDia(int d) {
         dia = d;
     }
 
     public void setMes(int m) {
-        mes  = m;
+        mes = m;
     }
 
     public void setAño(int a) {
@@ -66,6 +65,7 @@ public class Venta {
     public double getPrecioUni() {
         return PrecioUni;
     }
+
     public int getIdCliente() {
         return idCliente;
     }
@@ -85,11 +85,12 @@ public class Venta {
     public void setPrecioUni(int precio) {
         PrecioUni = precio;
     }
-    public double monto(){
-        return PrecioUni*Cantidad;
+
+    public double monto() {
+        return PrecioUni * Cantidad;
     }
 
     public String toString() {
-        return ("Clave de la vent :" + ClaveVta + ("\n")+"Cliente :" + idCliente  +("\n")+ "SKU Articulo :" + SKUArt + ("\n") + "Cantidad de vendidos:" + Cantidad + ("\n") + "Precio :$" + PrecioUni +String.format("\n Dia %s Mes %s Año %s ", getDia(),getMes(),getAño()) ).toUpperCase();
+        return ("Clave de la vent :" + ClaveVta + ("\n") + "Cliente :" + idCliente + ("\n") + "SKU Articulo :" + SKUArt + ("\n") + "Cantidad de vendidos:" + Cantidad + ("\n") + "Precio :$" + PrecioUni + String.format("\nfecha: Dia %s Mes %s Año %s ", getDia(), getMes(), getAño())).toUpperCase();
     }
 }

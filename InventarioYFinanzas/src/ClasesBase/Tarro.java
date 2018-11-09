@@ -1,17 +1,14 @@
 package ClasesBase;
 
-/**
- *
- * @author jasiel
- */
-public class Tarro extends Producto{
+public class Tarro extends Producto {
+
     private String tipo;
     private int tamano;
 
     public Tarro(int SKU, double PrecioUni, int Existencia, String tipo, int tamano) {
         super(SKU, PrecioUni, Existencia);
-        this.tamano=tamano;
-        this.tipo=tipo;
+        this.tamano = tamano;
+        this.tipo = tipo;
     }
 
     public String getTipo() {
@@ -32,7 +29,7 @@ public class Tarro extends Producto{
 
     @Override
     public String toString() {
-        return (super.toString()+"\nTIPO: " + tipo + "\nTAMAÑO: " + tamano).toUpperCase();
+        return (super.toString() + "\nTIPO: " + tipo + "\nTAMAÑO: " + tamano).toUpperCase();
     }
 
 }

@@ -1,8 +1,5 @@
 package ClasesBase;
 
-/**
- * @author oliverrood
- */
 public class Empleado extends Persona {
 
     private int idEmpleado;

@@ -1,15 +1,12 @@
 package ClasesBase;
 
-/**
- * @author oliverrood
- */
 public class Persona {
-    
+
     private String nombre;
     private String apellido;
     private long telefono;
     private String RFC;
-    
+
     // Datos Completos
     public Persona(String nombre, String apellido, long telefono, String RFC) {
         this.nombre = nombre;
@@ -24,7 +21,7 @@ public class Persona {
         this.apellido = apellido;
         this.telefono = telefono;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -59,8 +56,6 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "\nNombre: "+nombre+"\nApellido: "+apellido+"\nTelefono: "+telefono + "\nRFC: "+RFC;
+        return "\nNombre: " + nombre + "\nApellido: " + apellido + "\nTelefono: " + telefono + "\nRFC: " + RFC;
     }
-    
-
 }

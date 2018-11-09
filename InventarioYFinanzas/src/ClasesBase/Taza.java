@@ -1,9 +1,5 @@
 package ClasesBase;
 
-/**
- *
- * @author jasiel
- */
 public class Taza extends Producto {
 
     private String material;
@@ -46,4 +42,3 @@ public class Taza extends Producto {
         return (super.toString() + "\nMATERIAL: " + material + "\nCOLOR: " + color + "\nTAMAÑO: " + tamano).toUpperCase();
     }
 }
-
