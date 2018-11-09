@@ -185,8 +185,8 @@ public class Ejecutar {
             keyME = Keyboard.readInt();
             switch (keyME) {
                 case 1:
-                    String tela, corte, material, color, tamano, tipo;
-                    int keyTT, SKU, existencia, talla;
+                    String tela, corte, material, color, tipo;
+                    int keyTT, SKU, existencia, talla, tamano;
                     double precio;
                     System.out.println("\nINGRESA LOS DATOS DEL PRODUCTO POR AGREGAR\n");
                     do {
@@ -208,14 +208,14 @@ public class Ejecutar {
                         System.out.println("PRECIO");
                         precio=Keyboard.readDouble();
                         if (Double.isNaN(precio) || precio<0.1) {
-                            System.out.println("\033[31mPRECIO INVALIDO\033[34m");
+                            System.out.println("\033[31mPRECIO INVALIDO\n\033[34m");
                         }
                     } while (Double.isNaN(precio) || precio<0.1);
                     do {
                         System.out.println("EXISTENCIA");
                         existencia=Keyboard.readInt();
                         if (existencia<0) {
-                            System.out.println("\033[31mEXISTENCIA INVALIDA\033[34m");
+                            System.out.println("\033[31mEXISTENCIA INVALIDA\n\033[34m");
                         }
                     } while (existencia<0);
                     switch (keyTT) {
@@ -239,7 +239,7 @@ public class Ejecutar {
                                 System.out.println("TALLA");
                                 talla = Keyboard.readInt();
                                 if (talla < 0) {
-                                    System.out.println("\033[31mTALLA INVALIDA\033[34m");
+                                    System.out.println("\033[31mTALLA INVALIDA\n\033[34m");
                                 }
                             } while (talla < 0);
                             manejaInventario.agregar(SKU, precio, existencia, tela, corte, talla);
@@ -260,8 +260,14 @@ public class Ejecutar {
                                     System.out.println("\033[31mCOLOR INVALIDO\n\033[34m");
                                 }
                             } while (color.trim().isEmpty());
-                            tamano="11 oz";
-                            manejaInventario.agregar(SKU, precio, existencia, material, color, tamano);
+                            do {
+                                System.out.println("TAMAÑO");
+                                tamano = Keyboard.readInt();
+                                if (tamano < 0) {
+                                    System.out.println("\033[31mTAMAÑO INVALIDA\n\033[34m");
+                                }
+                            } while (tamano < 0);
+                            manejaInventario.agregar(SKU, precio, existencia, material, tamano, color);
                             break;
                         // TARRO
                         case 3:
@@ -272,7 +278,13 @@ public class Ejecutar {
                                     System.out.println("\033[31mTIPO INVALIDO\n\033[34m");
                                 }
                             } while (tipo.trim().isEmpty());
-                            tamano="16 oz";
+                            do {
+                                System.out.println("TAMAÑO");
+                                tamano = Keyboard.readInt();
+                                if (tamano < 0) {
+                                    System.out.println("\033[31mTAMAÑO INVALIDA\n\033[34m");
+                                }
+                            } while (tamano < 0);
                             manejaInventario.agregar(SKU, precio, existencia, tipo, tamano);
                             break;
                         default:
@@ -291,7 +303,6 @@ public class Ejecutar {
                     }
                     break;
                 case 3:
-                    System.out.println("\033[32mMODIFICAME \033[33mESTA\033[34m, \033[35mSAILLE\n");
                     System.out.println("INTRODUZCA EL SKU DEL PRODUCTO POR MODIFICAR");
                     int modP=Keyboard.readInt();
                     if (manejaInventario.buscarProducto(modP)!=-1) {
@@ -319,7 +330,7 @@ public class Ejecutar {
                                         System.out.println("\nINGRESA EL NUEVO SKU");
                                         newSKU = Keyboard.readInt();
                                         if (newSKU < 0) {
-                                            System.out.println("\033[31mSKU INVALIDO\033[34m");
+                                            System.out.println("\033[31mSKU INVALIDO\n\033[34m");
                                         } else if (manejaInventario.buscarProducto(newSKU) != -1) {
                                             System.out.println("\033[31mSKU YA EXISTENTE\n\033[34m");
                                             SKU = -1;
@@ -333,7 +344,7 @@ public class Ejecutar {
                                         System.out.println("\nINGRESE EL NUEVO PRECIO");
                                         newPrecio = Keyboard.readDouble();
                                         if (Double.isNaN(newPrecio) || newPrecio < 0) {
-                                            System.out.println("\033[31mPRECIO INVALIDO\033[34m");
+                                            System.out.println("\033[31mPRECIO INVALIDO\n\033[34m");
                                         }
                                     } while (Double.isNaN(newPrecio) || newPrecio < 0);
                                     manejaInventario.inventario.get(pos).setPrecioUni(newPrecio);
@@ -344,7 +355,7 @@ public class Ejecutar {
                                         System.out.println("\nINGRESE LA NUEVA EXISTENCIA");
                                         newExistencia = Keyboard.readInt();
                                         if (newExistencia < 0) {
-                                            System.out.println("\033[31mEXISTENCIA INVALIDA\033[34m");
+                                            System.out.println("\033[31mEXISTENCIA INVALIDA\n\033[34m");
                                         }
                                     } while (newExistencia < 0);
                                     manejaInventario.inventario.get(pos).setExistencia(newExistencia);
@@ -394,11 +405,25 @@ public class Ejecutar {
                                         } while (newCorte.trim().isEmpty());
                                         ((Textil)manejaInventario.inventario.get(pos)).SetCorte(newCorte);
                                     } else if (manejaInventario.inventario.get(pos) instanceof Taza) {
-                                        System.out.println("\033[35mSaille joto\n\033[34m");
-                                        System.out.println("Esta pendiente we\n");
+                                        int newTamano;
+                                        do {
+                                            System.out.println("TAMAÑO");
+                                            newTamano = Keyboard.readInt();
+                                            if (newTamano < 0) {
+                                                System.out.println("\033[31mTAMAÑO INVALIDO\n\033[34m");
+                                            }
+                                        } while (newTamano < 0);
+                                        ((Taza)manejaInventario.inventario.get(pos)).SetTamano(newTamano);
                                     } else if (manejaInventario.inventario.get(pos) instanceof Tarro) {
-                                        System.out.println("\033[35mSaille joto\n\033[34m");
-                                        System.out.println("Esta pendiente we\n");
+                                        int newTamano;
+                                        do {
+                                            System.out.println("TAMAÑO");
+                                            newTamano = Keyboard.readInt();
+                                            if (newTamano < 0) {
+                                                System.out.println("\033[31mTAMAÑO INVALIDO\n\033[34m");
+                                            }
+                                        } while (newTamano < 0);
+                                        ((Tarro)manejaInventario.inventario.get(pos)).SetTamano(newTamano);
                                     }
                                     break;
                                 case 6:
@@ -517,7 +542,6 @@ public class Ejecutar {
                     }
                     break;
                 case 3:
-                    System.out.println("\033[32mMODIFICAME \033[33mESTA\033[34m, \033[35mSAILLE\n");
                     System.out.println("INTRODUZCA EL ID DEL EMPLEADO POR MODIFICAR");
                     int modE=Keyboard.readInt();
                     if (manejaPersona.buscarEmpleado(modE)!=-1) {
@@ -664,7 +688,6 @@ public class Ejecutar {
                     }
                     break;
                 case 3:
-                    System.out.println("\033[32mMODIFICAME \033[33mESTA\033[34m, \033[35mSAILLE\n");
                     System.out.println("INTRODUZCA EL ID DEL CLIENTE POR MODIFICAR");
                     int modC=Keyboard.readInt();
                     if (manejaPersona.buscarCliente(modC)!=-1) {

@@ -4,45 +4,46 @@ package ClasesBase;
  *
  * @author jasiel
  */
-public class Taza extends Producto{
-   private String material;
+public class Taza extends Producto {
+
+    private String material;
+    private int tamano;
     private String color;
-    private String tamaño;
-    
-    public Taza(int SKU,double PrecioUni, int Existencia,String material,String color,String tamaño){
-        super(SKU,PrecioUni,Existencia);
-        this.material=material;
-        this.color=color;
-        this.tamaño=tamaño;
+
+    public Taza(int SKU, double PrecioUni, int Existencia, String material, int tamano, String color) {
+        super(SKU, PrecioUni, Existencia);
+        this.material = material;
+        this.tamano = tamano;
+        this.color = color;
     }
-    
-    public String getMaterial(){
+
+    public String getMaterial() {
         return material;
     }
-    
-    public void SetMaterial(String material){
-        this.material=material;
+
+    public void SetMaterial(String material) {
+        this.material = material;
     }
-    
-    public String getColor(){
+
+    public String getColor() {
         return color;
     }
-    
-    public void SetColor(String color){
-        this.color=color;
+
+    public void SetColor(String color) {
+        this.color = color;
     }
-    
-    public String getTamaño(){
-        return tamaño;
+
+    public int getTamano() {
+        return tamano;
     }
-    
-    public void SetTamaño(String tamaño){
-        this.tamaño=tamaño;
+
+    public void SetTamano(int tamano) {
+        this.tamano = tamano;
     }
-    
-     @Override
+
+    @Override
     public String toString() {
-        return (super.toString()+"\nMATERIAL: "+material+"\nCOLOR: "+color+"\nTAMAÑO: "+tamaño).toUpperCase();
+        return (super.toString() + "\nMATERIAL: " + material + "\nCOLOR: " + color + "\nTAMAÑO: " + tamano).toUpperCase();
     }
-} 
+}
 

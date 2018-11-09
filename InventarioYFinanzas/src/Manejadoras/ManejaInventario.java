@@ -17,14 +17,14 @@ public class ManejaInventario {
 
     //AGREGAR TARRO
 
-    public void agregar(int SKU, double PrecioUni, int Existencia, String tipo, String tamaño) {
+    public void agregar(int SKU, double PrecioUni, int Existencia, String tipo, int tamaño) {
         inventario.add(new Tarro(SKU, PrecioUni, Existencia, tipo, tamaño));
     }
 
     //AGREGAR TAZA
 
-    public void agregar(int SKU, double PrecioUni, int Existencia, String material, String color, String tamaño) {
-        inventario.add(new Taza(SKU, PrecioUni, Existencia, material, color, tamaño));
+    public void agregar(int SKU, double PrecioUni, int Existencia, String material, int tamaño, String color) {
+        inventario.add(new Taza(SKU, PrecioUni, Existencia, material, tamaño, color));
     }
 
     //AGREGAR TEXTIL
