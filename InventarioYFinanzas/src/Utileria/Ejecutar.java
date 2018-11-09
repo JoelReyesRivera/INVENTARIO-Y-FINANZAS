@@ -1,6 +1,9 @@
 package Utileria;
 // Jasiel pendejo
 import ClasesBase.Empleado;
+import ClasesBase.Tarro;
+import ClasesBase.Taza;
+import ClasesBase.Textil;
 import Manejadoras.ManejaPersonas;
 import Manejadoras.ManejaInventario;
 import Manejadoras.ManejaVentas;
@@ -199,10 +202,10 @@ public class Ejecutar {
                     do {
                         System.out.println("PRECIO");
                         precio=Keyboard.readDouble();
-                        if (precio<0) {
+                        if (Double.isNaN(precio) || precio<0) {
                             System.out.println("\033[31mPRECIO INVALIDO\033[34m");
                         }
-                    } while (precio<0);
+                    } while (Double.isNaN(precio) || precio<0);
                     do {
                         System.out.println("EXISTENCIA");
                         existencia=Keyboard.readInt();
@@ -282,75 +285,143 @@ public class Ejecutar {
                     break;
                 case 3:
                     System.out.println("\033[32mMODIFICAME \033[33mESTA\033[34m, \033[35mSAILLE\n");
-                    System.out.println("INTRODUZCA EL ID DEL EMPLEADO POR MODIFICAR");
+                    System.out.println("INTRODUZCA EL SKU DEL PRODUCTO POR MODIFICAR");
                     int modP=Keyboard.readInt();
                     if (manejaInventario.buscarProducto(modP)!=-1) {
                         int pos=manejaInventario.buscarProducto(modP);
                         int keyModE;
                         do {
-                            System.out.println("\n\033[33m-----\nEL INVENTARIO A MOFICAR ES...");
+                            System.out.println("\n\033[33m-----\nEL PRODUCTO A MODIFICAR ES...");
                             System.out.println(manejaInventario.inventario.get(pos));
-                            System.out.println("\n1.- NOMBRE\n2.- APELLIDO\n3.- TELEFONO\n4.- RFC\n5.- SUELDO\n\033[33m0.- Salir\033[34m");
+                            System.out.println("\n1.- SKU\n2.- PRECIO\n3.- EXISTENCIA");
+                            if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                System.out.println("4.- TELA\n5.- CORTE\n6.- TALLA");
+                            }
+                            if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                System.out.println("4.- MATERIAL\n5.- TAMAÑO\n6.- COLOR");
+                            }
+                            if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                System.out.println("4.- TIPO\n5.- TAMAÑO");
+                            }
+                            System.out.println("\033[33m0.- SALIR\033[34m");
                             keyModE = Keyboard.readInt();
                             switch (keyModE) {
                                 case 1:
-                                    String newNombre;
+                                    int newSKU;
                                     do {
-                                        System.out.println("\nINGRESE EL NUEVO NOMBRE");
-                                        newNombre = Keyboard.readString();
-                                        if (newNombre.trim().isEmpty()) {
-                                            System.out.println("\033[31mNOMBRE INVALIDO\n\033[34m");
+                                        System.out.println("\nINGRESA EL NUEVO SKU");
+                                        newSKU = Keyboard.readInt();
+                                        if (newSKU < 0) {
+                                            System.out.println("\033[31mSKU INVALIDO\033[34m");
                                         }
-                                    } while (newNombre.trim().isEmpty());
-                                    //manejaPersona.personas.get(pos).setNombre(newNombre);
+                                    } while (newSKU < 0);
+                                    manejaInventario.inventario.get(pos).SetSKU(newSKU);
                                     break;
                                 case 2:
-                                    String newApellido;
+                                    double newPrecio;
                                     do {
-                                        System.out.println("\nINGRESE EL NUEVO APELLIDO");
-                                        newApellido = Keyboard.readString();
-                                        if (newApellido.trim().isEmpty()) {
-                                            System.out.println("\033[31mAPELLIDO INVALIDO\n\033[34m");
+                                        System.out.println("\nINGRESE EL NUEVO PRECIO");
+                                        newPrecio = Keyboard.readDouble();
+                                        if (Double.isNaN(newPrecio) || newPrecio < 0) {
+                                            System.out.println("\033[31mPRECIO INVALIDO\033[34m");
                                         }
-                                    } while (newApellido.trim().isEmpty());
-                                    //manejaPersona.personas.get(pos).setApellido(newApellido);
+                                    } while (Double.isNaN(newPrecio) || newPrecio < 0);
+                                    manejaInventario.inventario.get(pos).setPrecioUni(newPrecio);
                                     break;
                                 case 3:
-                                    long newTelefono;
+                                    int newExistencia;
                                     do {
-                                        System.out.println("\nINGRESE EL NUEVO TELEFONO");
-                                        newTelefono = Keyboard.readLong();
-                                        if (newTelefono < 0) {
-                                            System.out.println("\033[31mTELEFONO INVALIDO\n\033[34m");
+                                        System.out.println("\nINGRESE LA NUEVA EXISTENCIA");
+                                        newExistencia = Keyboard.readInt();
+                                        if (newExistencia < 0) {
+                                            System.out.println("\033[31mEXISTENCIA INVALIDA\033[34m");
                                         }
-                                    } while (newTelefono < 0);
-                                    //manejaPersona.personas.get(pos).setTelefono(newTelefono);
+                                    } while (newExistencia < 0);
+                                    manejaInventario.inventario.get(pos).setExistencia(newExistencia);
                                     break;
                                 case 4:
-                                    String newRFC;
-                                    do {
-                                        System.out.println("\nINGRESE EL NUEVO RFC");
-                                        newRFC = Keyboard.readString();
-                                        if (newRFC.trim().isEmpty()) {
-                                            System.out.println("\033[31mRFC INVALIDO\n\033[34m");
-                                        }
-                                    } while (newRFC.trim().isEmpty());
-                                    //manejaPersona.personas.get(pos).setRFC(newRFC);
+                                    if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                        String newTela;
+                                        do {
+                                            System.out.println("\nINGRESE LA NUEVA TELA");
+                                            newTela = Keyboard.readString();
+                                            if (newTela.trim().isEmpty()) {
+                                                System.out.println("\033[31mTELA INVALIDA\n\033[34m");
+                                            }
+                                        } while (newTela.trim().isEmpty());
+                                        ((Textil)manejaInventario.inventario.get(pos)).SetTela(newTela);
+                                    } else if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                        String newMaterial;
+                                        do {
+                                            System.out.println("\nINGRESE EL NUEVO MATERIAL");
+                                            newMaterial = Keyboard.readString();
+                                            if (newMaterial.trim().isEmpty()) {
+                                                System.out.println("\033[31mMATERIAL INVALIDO\n\033[34m");
+                                            }
+                                        } while (newMaterial.trim().isEmpty());
+                                        ((Taza)manejaInventario.inventario.get(pos)).SetMaterial(newMaterial);
+                                    } else if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                        String newTipo;
+                                        do {
+                                            System.out.println("\nINGRESE EL NUEVO TIPO");
+                                            newTipo = Keyboard.readString();
+                                            if (newTipo.trim().isEmpty()) {
+                                                System.out.println("\033[31mTIPO INVALIDO\n\033[34m");
+                                            }
+                                        } while (newTipo.trim().isEmpty());
+                                        ((Tarro)manejaInventario.inventario.get(pos)).SetTipo(newTipo);
+                                    }
                                     break;
                                 case 5:
-                                    double newSueldo;
-                                    do {
-                                        System.out.println("\nINGRESE EL NUEVO SUELDO");
-                                        newSueldo = Keyboard.readDouble();
-                                        if (newSueldo < 0) {
-                                            System.out.println("\033[31mSUELDO INVALIDO\033[34m");
+                                    if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                        String newCorte;
+                                        do {
+                                            System.out.println("\nINGRESE EL NUEVO CORTE");
+                                            newCorte = Keyboard.readString();
+                                            if (newCorte.trim().isEmpty()) {
+                                                System.out.println("\033[31mCORTE INVALIDO\n\033[34m");
+                                            }
+                                        } while (newCorte.trim().isEmpty());
+                                        ((Textil)manejaInventario.inventario.get(pos)).SetCorte(newCorte);
+                                    } else if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                        System.out.println("\033[35mSaille joto\n\033[34m");
+                                        System.out.println("Esta pendiente we\n");
+                                    } else if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                        System.out.println("\033[35mSaille joto\n\033[34m");
+                                        System.out.println("Esta pendiente we\n");
+                                    }
+                                    break;
+                                case 6:
+                                    if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                        System.out.println("\033[31mOPCION INVALIDA\033[34m");
+                                    } else{
+                                        if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                            int newTalla;
+                                            do {
+                                                System.out.println("\nINGRESE LA NUEVA TALLA");
+                                                newTalla = Keyboard.readInt();
+                                                if (newTalla < 0) {
+                                                    System.out.println("\033[31mTALLA INVALIDA\033[34m");
+                                                }
+                                            } while (newTalla < 0);
+                                            ((Textil)manejaInventario.inventario.get(pos)).SetTalla(newTalla);
                                         }
-                                    } while (newSueldo < 0);
-                                    //((Empleado)manejaPersona.personas.get(pos)).setSueldo(newSueldo);
+                                        if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                            String newColor;
+                                            do {
+                                                System.out.println("COLOR");
+                                                newColor = Keyboard.readString();
+                                                if (newColor.trim().isEmpty()) {
+                                                    System.out.println("\033[31mCOLOR INVALIDO\n\033[34m");
+                                                }
+                                            } while (newColor.trim().isEmpty());
+                                            ((Taza)manejaInventario.inventario.get(pos)).SetColor(newColor);
+                                        }
+                                    }
                                     break;
                                 case 0:
                                     break;
-                                default: System.out.println("\033[31mOPCION INVALIDA\n\033[34m");
+                                default: System.out.println("\033[31mOPCION INVALIDA\033[34m");
                             }
                         } while (keyModE!=0);
                     }else{
@@ -416,10 +487,10 @@ public class Ejecutar {
                     do {
                         System.out.println("SUELDO");
                         sueldo=Keyboard.readDouble();
-                        if (sueldo<0) {
+                        if (Double.isNaN(sueldo) || sueldo<0) {
                             System.out.println("\033[31mSUELDO INVALIDO\033[34m");
                         }
-                    } while (sueldo<0);
+                    } while (Double.isNaN(sueldo) || sueldo<0);
                     manejaPersona.agregar(nombre, apellido, telefono, RFC, sueldo);
                     System.out.println("\n\033[32mEMPLEADO AGREGADO CORRECTAMENTE\033[34m");
                     break;
@@ -494,10 +565,10 @@ public class Ejecutar {
                                     do {
                                         System.out.println("\nINGRESE EL NUEVO SUELDO");
                                         newSueldo = Keyboard.readDouble();
-                                        if (newSueldo < 0) {
+                                        if (Double.isNaN(newSueldo) || newSueldo<0) {
                                             System.out.println("\033[31mSUELDO INVALIDO\033[34m");
                                         }
-                                    } while (newSueldo < 0);
+                                    } while (Double.isNaN(newSueldo) || newSueldo<0);
                                     ((Empleado)manejaPersona.personas.get(pos)).setSueldo(newSueldo);
                                     break;
                                 case 0:
