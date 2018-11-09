@@ -42,6 +42,6 @@ public class Textil extends Producto{
     
      @Override
     public String toString() {
-        return super.toString()+"\nTELA: "+tela+"\nCORTE: "+corte+"\nTALLA: "+talla;
+        return (super.toString()+"\nTELA: "+tela+"\nCORTE: "+corte+"\nTALLA: "+talla).toUpperCase();
     }
 }

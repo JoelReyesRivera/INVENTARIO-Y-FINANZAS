@@ -17,6 +17,8 @@ import Manejadoras.ManejaFinanzas;
 
 public class Ejecutar {
     
+    public static int contCA=1, contEA=1;
+    
     public static void main(String[] args) {
         
         Ejecutar main = new Ejecutar();
@@ -196,16 +198,19 @@ public class Ejecutar {
                         System.out.println("SKU");
                         SKU=Keyboard.readInt();
                         if (SKU<0) {
-                            System.out.println("\033[31mSKU INVALIDO\033[34m");
+                            System.out.println("\033[31mSKU INVALIDO\n\033[34m");
+                        }else if (manejaInventario.buscarProducto(SKU)!=-1) {
+                            System.out.println("\033[31mSKU YA EXISTENTE\n\033[34m");
+                            SKU=-1;
                         }
                     } while (SKU<0);
                     do {
                         System.out.println("PRECIO");
                         precio=Keyboard.readDouble();
-                        if (Double.isNaN(precio) || precio<0) {
+                        if (Double.isNaN(precio) || precio<0.1) {
                             System.out.println("\033[31mPRECIO INVALIDO\033[34m");
                         }
-                    } while (Double.isNaN(precio) || precio<0);
+                    } while (Double.isNaN(precio) || precio<0.1);
                     do {
                         System.out.println("EXISTENCIA");
                         existencia=Keyboard.readInt();
@@ -273,6 +278,8 @@ public class Ejecutar {
                         default:
                     }
                     System.out.println("\n\033[32mPRODUCTO AGREGADO CORRECTAMENTE\033[34m");
+                    int posAP=manejaInventario.buscarProducto(SKU);
+                    System.out.println(manejaInventario.inventario.get(posAP));
                     break;
                 case 2:
                     System.out.println("\nINGRESA EL SKU DEL PRODUCTO A BUSCAR");
@@ -313,6 +320,9 @@ public class Ejecutar {
                                         newSKU = Keyboard.readInt();
                                         if (newSKU < 0) {
                                             System.out.println("\033[31mSKU INVALIDO\033[34m");
+                                        } else if (manejaInventario.buscarProducto(newSKU) != -1) {
+                                            System.out.println("\033[31mSKU YA EXISTENTE\n\033[34m");
+                                            SKU = -1;
                                         }
                                     } while (newSKU < 0);
                                     manejaInventario.inventario.get(pos).SetSKU(newSKU);
@@ -482,7 +492,7 @@ public class Ejecutar {
                         RFC=Keyboard.readString();
                         if (RFC.trim().isEmpty()) {
                             System.out.println("\033[31mRFC INVALIDO\n\033[34m");
-                        }
+                        } 
                     } while (RFC.trim().isEmpty());
                     do {
                         System.out.println("SUELDO");
@@ -493,6 +503,9 @@ public class Ejecutar {
                     } while (Double.isNaN(sueldo) || sueldo<0);
                     manejaPersona.agregar(nombre, apellido, telefono, RFC, sueldo);
                     System.out.println("\n\033[32mEMPLEADO AGREGADO CORRECTAMENTE\033[34m");
+                    int posEA=manejaPersona.buscarEmpleado(contEA);
+                    System.out.println(manejaPersona.personas.get(posEA));
+                    contEA++;
                     break;
                 case 2:
                     System.out.println("\nINGRESA EL ID DEL EMPLEADO A BUSCAR");
@@ -637,6 +650,9 @@ public class Ejecutar {
                     } while (RFC.trim().isEmpty());
                     manejaPersona.agregar(nombre, apellido, telefono, RFC,0);
                     System.out.println("\n\033[32mCLIENTE AGREGADO CORRECTAMENTE\033[34m");
+                    int posCA=manejaPersona.buscarCliente(contCA);
+                    System.out.println(manejaPersona.personas.get(posCA));
+                    contCA++;
                     break;
                 case 2:
                     System.out.println("\nINGRESA EL ID DEL CLIENTE A BUSCAR");
