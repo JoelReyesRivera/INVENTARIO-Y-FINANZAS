@@ -4,7 +4,7 @@ public class Cliente extends Persona {
 
     private int idCliente;
     private int totalCompras;
-    private static int contador = 0;
+    public static int contador = 0;
 
     public Cliente(String nombre, String apellido, long telefono, String RFC) {
         super(nombre, apellido, telefono, RFC);

@@ -91,6 +91,6 @@ public class Venta {
     }
 
     public String toString() {
-        return ("Clave de la vent :" + ClaveVta + ("\n") + "Cliente :" + idCliente + ("\n") + "SKU Articulo :" + SKUArt + ("\n") + "Cantidad de vendidos:" + Cantidad + ("\n") + "Precio :$" + PrecioUni + String.format("\nfecha: Dia %s Mes %s Año %s ", getDia(), getMes(), getAño())).toUpperCase();
+        return ("Clave de la vent :" + ClaveVta + ("\n") + "Cliente :" + idCliente + ("\n") + "SKU Articulo :" + SKUArt + ("\n") + "Cantidad de vendidos:" + Cantidad + ("\n") + "Precio Articulo: $" + PrecioUni +" MXN\nMonto: $"+monto()+" MXN"+ String.format("\nfecha: Dia %s Mes %s Año %s ", getDia(), getMes(), getAño())).toUpperCase();
     }
 }

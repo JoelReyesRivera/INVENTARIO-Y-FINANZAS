@@ -96,4 +96,15 @@ public class ManejaPersonas {
                 break;
         }
     }
+    
+    public boolean hayClientes(){
+        for (Persona persona : personas) {
+                    if (persona != null) {
+                        if (persona instanceof Cliente) {
+                            return true;
+                        }
+                    }
+                }
+        return false;
+    }
 }
