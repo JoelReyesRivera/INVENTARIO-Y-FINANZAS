@@ -7,21 +7,20 @@ public class Cliente extends Persona{
     
     private int idCliente;
     private int totalCompras;
-    private static int contador=1;
+    private static int contador=0;
     
-    public Cliente(String nombre, String apellido, long telefono, String RFC,int totalCompras ){
+    public Cliente(String nombre, String apellido, long telefono, String RFC ){
         super(nombre,apellido,telefono, RFC);
-        this.idCliente=contador;
-        this.totalCompras=totalCompras;   
         contador++;
+        this.idCliente=contador; 
+       
         
     }
     
     // Sin RFC
-    public Cliente(String nombre, String apellido, long telefono,int totalCompras ){
+    public Cliente(String nombre, String apellido, long telefono){
         super(nombre,apellido,telefono );
         this.idCliente=contador;
-        this.totalCompras=totalCompras;
         contador++;
     }
     
@@ -39,6 +38,9 @@ public class Cliente extends Persona{
     
     public void SetTotalCompras(int totalCompras){
         this.totalCompras=totalCompras;
+    }
+    public void aumentarCompras(){
+        totalCompras++;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package Utileria;
 // Jasiel pendejo
+import ClasesBase.Cliente;
 import ClasesBase.Empleado;
 import ClasesBase.Tarro;
 import ClasesBase.Taza;
@@ -41,7 +42,7 @@ public class Ejecutar {
                     main.vender(manejaPersona,manejaInventario,manejaVentas,f);
                     break;
                 case 2:
-                    main.menuFinanzas(manejaFinanza);
+                    main.menuFinanzas(manejaFinanza,manejaVentas);
                     break;
                 case 3:
                     main.menuProductos(manejaInventario);
@@ -64,9 +65,10 @@ public class Ejecutar {
     
     public void vender(ManejaPersonas manejaPersona,ManejaInventario ManejaInventarios,ManejaVentas Manejaventas,Fecha f){
         
-        int cR;
-        String nombreCliente, apellidoCliente, rfcCliente, emailCliente, SKU;
-        long telefonoCliente;
+        int cR, SKU;
+        String nombreCliente="", apellidoCliente="", rfcCliente="";
+        long telefonoCliente=0;
+        int idCliente=0;
         
         System.out.println("\n- INGRESE LOS DATOS DE LA VENTA -\n");
         do {
@@ -74,78 +76,56 @@ public class Ejecutar {
             cR=Keyboard.readInt();
             System.out.println("");
             if (cR == 1) {
-                int idCliente;
                 do {
                     System.out.println("INGRESE EL ID DEL CLIENTE.");
                     idCliente=Keyboard.readInt();
-                    if (manejaPersona.buscarCliente(cR)!=-1) {
+                    if (manejaPersona.buscarCliente(idCliente)==-1) {
                         System.out.println("\033[31mEL ID INGRESADO NO EXISTE.\n\033[34m");
                     }
-                } while (manejaPersona.buscarCliente(cR)!=-1);
-                /*
-                int pos=manejaPersona.buscarCliente(cR);
-                nombreCliente=manejaPersona.personas.get(pos).getNombre();
-                apellidoCliente=manejaPersona.personas.get(pos).getApellido();
-                rfcCliente=manejaPersona.personas.get(pos).getRFC();
-                telefonoCliente=manejaPersona.personas.get(pos).getTelefono();
-                */
+                } while (manejaPersona.buscarCliente(cR)==-1);
+                    System.out.println((Cliente)manejaPersona.personas.get(manejaPersona.buscarCliente(idCliente)));
             } else {
                 do {
-                    System.out.println("Ingrese el nombre del cliente.");
+                    System.out.println("INGRESE EL NOMBRE DEL CLIENTE");
                     nombreCliente = Keyboard.readString();
                     if (nombreCliente.trim().isEmpty()) {
                         System.out.println("\033[31mEl nombre ingresado es invalido.\n\033[34m");
                     }
                 } while (nombreCliente.trim().isEmpty());
                 do {
-                    System.out.println("Ingrese el apellido del cliente.");
+                    System.out.println("INGRESE EL NOMBRE DEL APELLIDO.");
                     apellidoCliente = Keyboard.readString();
                     if (apellidoCliente.trim().isEmpty()) {
                         System.out.println("\033[31mEl apellido ingresado es invalido.\n\033[34m");
                     }
                 } while (apellidoCliente.trim().isEmpty());
                 do {
-                    System.out.println("Ingrese el RFC del cliente. (Indique 0 si no desea ingresar RFC)");
+                    System.out.println("INGRESE EL RFC (Indique 0 si no desea ingresar RFC)");
                     rfcCliente = Keyboard.readString();
                     if (rfcCliente.trim().isEmpty()) {
                         System.out.println("\033[31mEl RFC ingresado es invalido.\n\033[34m");
                     }
                 } while (rfcCliente.trim().isEmpty());
                 do {
-                    System.out.println("Ingrese el telefono del cliente.");
+                    System.out.println("INGRESE EL TELEFONO DEL CLIENTE.");
                     telefonoCliente = Keyboard.readLong();
                     if (apellidoCliente.trim().isEmpty()) {
                         System.out.println("\033[31mEl Apellido ingresado es invalido.\n\033[34m");
                     }
                 } while (telefonoCliente < 1);
-                do {
-                    System.out.println("Ingrese el email del cliente. (Indique 0 si no desea ingresar email)");
-                    emailCliente = Keyboard.readString();
-                    if (emailCliente.trim().isEmpty()) {
-                        System.out.println("\033[31mEl email ingresado es invalido.\n\033[34m");
-                    }
-                    if ( emailCliente.length() < 5) {
-                        System.out.println("\033[31mEl email ingresado es invalido.\n\033[34m");
-                        emailCliente = null;
-                    }
-                } while (emailCliente.trim().isEmpty());
             }
-            // Agregar cliente al arreglo
+            manejaPersona.agregar(nombreCliente, apellidoCliente, telefonoCliente, rfcCliente);
         } while (cR < 1 || cR > 2);
 
-        do {
-            System.out.println("Ingrese el SKU del producto a vender.");
-            SKU = Keyboard.readString();
-            if (SKU.trim().isEmpty()) {
-                System.out.println("\033[31mEl SKU ingresado no existe.\n\033[34m");
+            System.out.println("INGRESE EL SKU A VENDER.");
+            SKU = Keyboard.readInt();
+            if (ManejaInventarios.buscarProducto(SKU)==-1) {
+               do{
+                   System.out.println("\033[31mEL SKU INGRESADO NO EXISTE, INGRESE EL SKU DE NUEVO\n");
+                   SKU = Keyboard.readInt();
+               }while(ManejaInventarios.buscarProducto(SKU)==-1);
+                
             }
-            /* Validacion SKU Inexistente
-            if () {
-                System.out.println("\033[31mEl SKU ingresado no existe.\n");
-                SKU=null;
-            }
-             */
-        } while (SKU.trim().isEmpty());
         int opcion = 0;
         int p = 0;
         do {
@@ -160,7 +140,6 @@ public class Ejecutar {
             switch (opcion) {
                 case 1:
                     String CV = "";
-                    int CA;
                     if (ManejaInventarios.inventario.get(0) == null) {
                         System.out.println("*NO HAY ARTICULOS PARA VENDER*");
                         break;
@@ -168,18 +147,26 @@ public class Ejecutar {
 
                     System.out.println("ESCRIBE LA CLAVE DE LA VENTA");
                     CV = Keyboard.readString();
+                    System.out.println(Manejaventas.buscarVenta(CV));       
+                    if(Manejaventas.buscarVenta(CV)!=-1){
+                        do{
+                            System.out.println("CLAVE DE VENTA EXISTENTE, INGRESE UNA UNICA");
+                            CV = Keyboard.readString();        
+                        }while(Manejaventas.buscarVenta(CV)!=-1);
+                    }
                     do {
                         System.out.println("¿CUANTOS PRODUCTOS DESEA COMPRAR?");
                         p = Keyboard.readInt();
                     } while (p < 1);
                     for (int i = 0; i < ManejaInventarios.inventario.size(); i++) {
                         if (p > ManejaInventarios.inventario.get(i).getExistencia()) {
-                            System.out.println("*NO PUEDO VENDERTE ESE NUMERO, NOMAS TENEMOS " + ManejaInventarios.inventario.get(i).getExistencia());
+                            System.out.println("EXISTENCIA INSUFICIENTE, EXISTENCIA ACTUAL : " + ManejaInventarios.inventario.get(i).getExistencia());
                             return;
                         }
                         ManejaInventarios.inventario.get(i).setExistencia(ManejaInventarios.inventario.get(i).getExistencia() - p);
 
-                        Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(i).getPrecioUni() * p, f.getDia(), f.getMes(), f.getAño());
+                        Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(i).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(),idCliente);
+                        ((Cliente)manejaPersona.personas.get(idCliente)).aumentarCompras();
                     }
                     break;
                 case 2:
@@ -202,8 +189,7 @@ public class Ejecutar {
         } while (opcion != 0);
     }
     
-    public void menuFinanzas( ManejaFinanzas ManejaFinanza){
-      ManejaVentas ManejaVenta=new ManejaVentas();
+    public void menuFinanzas( ManejaFinanzas ManejaFinanza, ManejaVentas manejaVentas){
     int opcion = 0;
         do {
             System.out.println();
@@ -222,14 +208,14 @@ public class Ejecutar {
                     m=Keyboard.readInt();
                     System.out.println("ESCRIBE EL AÑO");
                     a=Keyboard.readInt();
-                    ManejaFinanza.Ventadia(d, m, a,ManejaVenta);
+                    ManejaFinanza.Ventadia(d, m, a,manejaVentas);
                  break;
                 case 2:
                    System.out.println("ESCRIBE EL MES");
                     m=Keyboard.readInt();
                     System.out.println("ESCRIBE EL AÑO");
                     a=Keyboard.readInt();
-                    ManejaFinanza.VentaMes(m,a,ManejaVenta);
+                    ManejaFinanza.VentaMes(m,a,manejaVentas);
                      break;
                 case 0:
                     break;

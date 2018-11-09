@@ -29,13 +29,13 @@ public class ManejaPersonas {
     }
 
     //AGREGAR CLIENTE CON TODOS SUS ATRIBUTOS
-    public void agregar(String nombre, String apellido, long telefono, String RFC, int totalCompras) {
-        personas.add(new Cliente(nombre, apellido, telefono, RFC, totalCompras));
+    public void agregar(String nombre, String apellido, long telefono, String RFC) {
+        personas.add(new Cliente(nombre, apellido, telefono, RFC));
     }
 
     //AGREGAR CLIENTE SIN RFC
-    public void agregar(String nombre, String apellido, long telefono, int totalCompras) {
-        personas.add(new Cliente(nombre, apellido, telefono, totalCompras));
+    public void agregar(String nombre, String apellido, long telefono) {
+        personas.add(new Cliente(nombre, apellido, telefono));
     }
 
     //BUSCAR CLIENTE

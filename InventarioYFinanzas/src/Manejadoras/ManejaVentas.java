@@ -18,10 +18,21 @@ public class ManejaVentas {
      }
      
     //Agregar
-     public void Agregar(String ClaveVta, String SKU, int Cantidad, double PrecioUni,int dia, int mes,int año) {
-        Ventas.add(new Venta(ClaveVta,SKU,Cantidad,PrecioUni,f.getDia(),f.getMes(),f.getAño()));
+     public void Agregar(String ClaveVta, int SKU, int Cantidad, double PrecioUni,int dia, int mes,int año, int cliente) {
+        Ventas.add(new Venta(ClaveVta,SKU,Cantidad,PrecioUni,f.getDia(),f.getMes(),f.getAño(), cliente));
     }
-     
+     public int buscarVenta(String clave) {
+        int posicion = -1;
+        for (Venta venta: Ventas) {
+            if (venta != null) {
+                    if (venta.getClaveVta().equals(clave)) {
+                       return Ventas.indexOf(clave);
+                }
+            }
+
+        }
+        return posicion;
+    }
     //IMPRIMIR
    public void Imprimir(){ 
        for(int i=0;i<Ventas.size();i++){
