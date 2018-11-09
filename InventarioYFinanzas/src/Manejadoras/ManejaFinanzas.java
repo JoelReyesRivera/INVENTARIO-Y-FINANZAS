@@ -1,32 +1,31 @@
 package Manejadoras;
-
+import Manejadoras.ManejaVentas;
 /**
  *
  * @author ADM-PC
  */
 public class ManejaFinanzas {
 
-    ManejaVentas ManejaVenta = new ManejaVentas();
-
     //ImprimirVentasPorDia
-    public void Ventadia(int d, int m, int a) {
+    public void Ventadia(int d,int m,int a, ManejaVentas o){
         double VAD = 0;
-        for (int i = 0; i <= ManejaVenta.Ventas.size(); i++) {
-            //           if (b.arrVentas[i].getfecha().getDia() == d && b.arrVentas[i].getfecha().getMes() == m && b.arrVentas[i].getfecha().getAño() == a) {
-            VAD += ManejaVenta.Ventas.get(i).getPrecioUni();
-            System.out.println("Ventas del dia :" + VAD);
-            //}
+        for (int i = 0; i < o.Ventas.size(); i++) {
+                if ((o.Ventas.get(i).getDia() == d) && (o.Ventas.get(i).getMes() == m) && (o.Ventas.get(i).getAño() == a ))
+                {
+                      VAD += o.Ventas.get(i).getPrecioUni();
+                }
         }
+        System.out.println(VAD);
     }
-
-    //ImprimirVentasPorMes
-    public void VentaMes(int m) {
+   
+    public void VentaMes(int m, int a, ManejaVentas o) {
         double VAM = 0;
-        for (int i = 0; i <= ManejaVenta.Ventas.size(); i++) {
-            //     if (b.arrVentas[i].getfecha().getMes() == m) {
-            VAM += ManejaVenta.Ventas.get(i).getPrecioUni();
-            System.out.println("Las ganancias del mes son :" + VAM);
-            //}
+        for (int i = 0; i < o.Ventas.size(); i++) {
+                if(o.Ventas.get(i).getMes()==m && o.Ventas.get(i).getAño()==a)
+                 {
+                     VAM += o.Ventas.get(i).getPrecioUni();
+            }
         }
+        System.out.print(VAM); 
     }
 }

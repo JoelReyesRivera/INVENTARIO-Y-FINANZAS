@@ -8,6 +8,7 @@ import Manejadoras.ManejaPersonas;
 import Manejadoras.ManejaInventario;
 import Manejadoras.ManejaVentas;
 import Manejadoras.ManejaFinanzas;
+import ClasesBase.Fecha;
 
 /**
  *      ITNM - Campus Culiacan
@@ -24,18 +25,20 @@ public class Ejecutar {
         Ejecutar main = new Ejecutar();
         ManejaPersonas manejaPersona = new ManejaPersonas();
         ManejaFinanzas manejaFinanza=new ManejaFinanzas();
+        ManejaVentas manejaVentas=new ManejaVentas();
         ManejaInventario manejaInventario = new ManejaInventario();
-                
+        Fecha f=new Fecha();        
         System.out.println("\033[34m------------ BIENVENIDO ------------\n\033[34m");
         
         int key;
         do {
+            System.out.println(manejaVentas.f);
             System.out.println("\033[33m------------------------------------\nINGRESE LA OPCION QUE DESEA REALIZAR\n");
-            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n0.- Salir\033[34m");
+            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- FINALIZAR DÍA\n0.- Salir\033[34m");
             key = Keyboard.readInt();
             switch (key) {
                 case 1:
-                    main.vender(manejaPersona);
+                    main.vender(manejaPersona,manejaInventario,manejaVentas,f);
                     break;
                 case 2:
                     main.menuFinanzas(manejaFinanza);
@@ -48,6 +51,10 @@ public class Ejecutar {
                     break;
                 case 5:
                     main.menuClientes(manejaPersona);
+                    break;
+                case 6:
+                    manejaVentas.f.finalizarDia();
+                    break;
                 case 0:
                     break;
                 default: System.out.println("\033[31mOPCION INVALIDA\n\033[34m");
@@ -55,7 +62,7 @@ public class Ejecutar {
         } while (key != 0);
     }
     
-    public void vender(ManejaPersonas manejaPersona){
+    public void vender(ManejaPersonas manejaPersona,ManejaInventario ManejaInventarios,ManejaVentas Manejaventas,Fecha f){
         
         int cR;
         String nombreCliente, apellidoCliente, rfcCliente, emailCliente, SKU;
@@ -83,7 +90,7 @@ public class Ejecutar {
                 telefonoCliente=manejaPersona.personas.get(pos).getTelefono();
                 */
             } else {
-                do { 
+                do {
                     System.out.println("Ingrese el nombre del cliente.");
                     nombreCliente = Keyboard.readString();
                     if (nombreCliente.trim().isEmpty()) {
@@ -110,25 +117,25 @@ public class Ejecutar {
                     if (apellidoCliente.trim().isEmpty()) {
                         System.out.println("\033[31mEl Apellido ingresado es invalido.\n\033[34m");
                     }
-                } while (telefonoCliente<1);
+                } while (telefonoCliente < 1);
                 do {
                     System.out.println("Ingrese el email del cliente. (Indique 0 si no desea ingresar email)");
-                    rfcCliente = Keyboard.readString();
-                    if (rfcCliente.trim().isEmpty()) {
+                    emailCliente = Keyboard.readString();
+                    if (emailCliente.trim().isEmpty()) {
                         System.out.println("\033[31mEl email ingresado es invalido.\n\033[34m");
                     }
-                    if (rfcCliente.length()>1 || rfcCliente.length()<5) {
+                    if ( emailCliente.length() < 5) {
                         System.out.println("\033[31mEl email ingresado es invalido.\n\033[34m");
-                        rfcCliente=null;
+                        emailCliente = null;
                     }
-                } while (rfcCliente.trim().isEmpty());
+                } while (emailCliente.trim().isEmpty());
             }
             // Agregar cliente al arreglo
-        } while (cR<1||cR>2);
+        } while (cR < 1 || cR > 2);
 
         do {
             System.out.println("Ingrese el SKU del producto a vender.");
-            SKU=Keyboard.readString();
+            SKU = Keyboard.readString();
             if (SKU.trim().isEmpty()) {
                 System.out.println("\033[31mEl SKU ingresado no existe.\n\033[34m");
             }
@@ -137,40 +144,97 @@ public class Ejecutar {
                 System.out.println("\033[31mEl SKU ingresado no existe.\n");
                 SKU=null;
             }
-            */
+             */
         } while (SKU.trim().isEmpty());
+        int opcion = 0;
+        int p = 0;
+        do {
+            System.out.println();
+            System.out.println("***************¿Que desea hacer?****************");
+            System.out.println("1-----------VENDER ARTICULO");
+            System.out.println("2-----------MOSTRAR LAS VENTAS");
+            System.out.println("3-----------MODIFICAR LA CANTIDAD");
+            System.out.println("0-----------SALIR");
+
+            opcion = Keyboard.readInt();
+            switch (opcion) {
+                case 1:
+                    String CV = "";
+                    int CA;
+                    if (ManejaInventarios.inventario.get(0) == null) {
+                        System.out.println("*NO HAY ARTICULOS PARA VENDER*");
+                        break;
+                    }
+
+                    System.out.println("ESCRIBE LA CLAVE DE LA VENTA");
+                    CV = Keyboard.readString();
+                    do {
+                        System.out.println("¿CUANTOS PRODUCTOS DESEA COMPRAR?");
+                        p = Keyboard.readInt();
+                    } while (p < 1);
+                    for (int i = 0; i < ManejaInventarios.inventario.size(); i++) {
+                        if (p > ManejaInventarios.inventario.get(i).getExistencia()) {
+                            System.out.println("*NO PUEDO VENDERTE ESE NUMERO, NOMAS TENEMOS " + ManejaInventarios.inventario.get(i).getExistencia());
+                            return;
+                        }
+                        ManejaInventarios.inventario.get(i).setExistencia(ManejaInventarios.inventario.get(i).getExistencia() - p);
+
+                        Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(i).getPrecioUni() * p, f.getDia(), f.getMes(), f.getAño());
+                    }
+                    break;
+                case 2:
+                    Manejaventas.Imprimir();
+                    break;
+                case 3:
+                    if (Manejaventas.Ventas.get(0) == null) {
+                        System.out.println("*NO HAY VENTAS REGISTRADAS*");
+                        break;
+                    }
+                    System.out.println("ESCRIBE LA CLAVE DE LA VENTA QUE DESEA MODIFICAR");
+                    CV = Keyboard.readString();
+                    Manejaventas.ModificarCantidad(CV, ManejaInventarios);
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("*INTRODUCE UNA OPCIÓN VALIDA*");
+            }
+        } while (opcion != 0);
     }
     
     public void menuFinanzas( ManejaFinanzas ManejaFinanza){
+      ManejaVentas ManejaVenta=new ManejaVentas();
     int opcion = 0;
         do {
             System.out.println();
             System.out.println("***************¿Que desea hacer?****************");
-            System.out.println("OPCIÓN 1-----------Buscar ganancias del dia");
-            System.out.println("OPCIÓN 2-----------Buscar ganancias de un mes");
-            System.out.println("OPCIÓN 0-----------Salir");
-            System.out.print("Introduce la opción: ");
+            System.out.println("1-----------BUSCAR GANANCIAS DE UN DIA");
+            System.out.println("2-----------BUSCAR GANANCIAS DEL MES");
+            System.out.println("0-----------SALIR");
+            System.out.print("INTRODUCE UNA OPCION: ");
             opcion = Keyboard.readInt();
             switch (opcion) {
                 case 1:
                     int d,m,a;
-                    System.out.println("Escribe el dia");
+                    System.out.println("ESCRIBE EL DIA");
                     d=Keyboard.readInt();
-                    System.out.println("Escribe el mes");
+                    System.out.println("ESCRIBE EL MES");
                     m=Keyboard.readInt();
-                    System.out.println("Escribe el año");
+                    System.out.println("ESCRIBE EL AÑO");
                     a=Keyboard.readInt();
-                    ManejaFinanza.Ventadia(d, m, a);
+                    ManejaFinanza.Ventadia(d, m, a,ManejaVenta);
                  break;
                 case 2:
-                    System.out.println("Escribe el mes");
+                   System.out.println("ESCRIBE EL MES");
                     m=Keyboard.readInt();
-                  ManejaFinanza.VentaMes(m);
+                    System.out.println("ESCRIBE EL AÑO");
+                    a=Keyboard.readInt();
+                    ManejaFinanza.VentaMes(m,a,ManejaVenta);
                      break;
                 case 0:
                     break;
                 default:
-                    System.out.println("*Introduce una opción válida*");
+                    System.out.println("*INTRODUCE UNA OPCIÓN VALIDA*");
             }
         } while (opcion != 0);
     }    
