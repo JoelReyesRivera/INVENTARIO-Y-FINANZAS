@@ -41,6 +41,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "\nSku: " + SKU + "\nPrecio por unidad: $" + PrecioUni + "\nExistencia: " + Existencia;
+        return "\nSKU: " + SKU + "\nPRECIO: $" + PrecioUni + " MXN\nEXISTENCIA: " + Existencia;
     }
 }

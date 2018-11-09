@@ -32,8 +32,7 @@ public class Tarro extends Producto{
 
     @Override
     public String toString() {
-        super.toString();
-        return "\nTipo: " + tipo + "\nTamaño: " + tamaño;
+        return super.toString()+"\nTIPO: " + tipo + "\nTAMAÑO: " + tamaño;
     }
 
 }

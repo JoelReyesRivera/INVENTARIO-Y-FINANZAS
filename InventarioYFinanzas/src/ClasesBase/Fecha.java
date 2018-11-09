@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ClasesBase;
 
 /**
@@ -10,9 +5,10 @@ package ClasesBase;
  * @author jasiel
  */
 public class Fecha {
-    private int dia=8;
-    private int mes=11;
-    private int año=2018;
+
+    private int dia = 8;
+    private int mes = 11;
+    private int año = 2018;
 
     //Constructor por defecto
     public Fecha() {
@@ -113,4 +109,3 @@ public class Fecha {
         return sb.toString();
     }
 }
-

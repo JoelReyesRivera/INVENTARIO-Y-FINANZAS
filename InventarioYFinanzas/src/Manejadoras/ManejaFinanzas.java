@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Manejadoras;
 
 /**
@@ -10,8 +5,9 @@ package Manejadoras;
  * @author ADM-PC
  */
 public class ManejaFinanzas {
-    ManejaVentas ManejaVenta=new ManejaVentas();
-    
+
+    ManejaVentas ManejaVenta = new ManejaVentas();
+
     //ImprimirVentasPorDia
     public void Ventadia(int d, int m, int a) {
         double VAD = 0;
@@ -22,7 +18,7 @@ public class ManejaFinanzas {
             //}
         }
     }
-    
+
     //ImprimirVentasPorMes
     public void VentaMes(int m) {
         double VAM = 0;
@@ -32,6 +28,5 @@ public class ManejaFinanzas {
             System.out.println("Las ganancias del mes son :" + VAM);
             //}
         }
-
     }
 }
