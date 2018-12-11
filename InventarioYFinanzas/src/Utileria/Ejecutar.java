@@ -102,7 +102,7 @@ public class Ejecutar {
                                     if (manejaPersona.buscarCliente(idCliente) == -1) {
                                         System.out.println("\033[31mEL ID INGRESADO NO EXISTE.\n\033[34m");
                                     }
-                                } while (manejaPersona.buscarCliente(cR) == -1);
+                                } while (manejaPersona.buscarCliente(idCliente) == -1);
                                 System.out.println((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(idCliente)));
                             } else {
                                 do {

@@ -39,6 +39,6 @@ public class Taza extends Producto {
 
     @Override
     public String toString() {
-        return (super.toString() + "\nMATERIAL: " + material + "\nCOLOR: " + color + "\nTAMAÑO: " + tamano).toUpperCase();
+        return ("\nTAZA"+super.toString() + "\nMATERIAL: " + material + "\nCOLOR: " + color + "\nTAMAÑO: " + tamano).toUpperCase();
     }
 }

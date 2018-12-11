@@ -29,7 +29,7 @@ public class Tarro extends Producto {
 
     @Override
     public String toString() {
-        return (super.toString() + "\nTIPO: " + tipo + "\nTAMAÑO: " + tamano).toUpperCase();
+        return ("\nTARRO"+super.toString() + "\nTIPO: " + tipo + "\nTAMAÑO: " + tamano).toUpperCase();
     }
 
 }
