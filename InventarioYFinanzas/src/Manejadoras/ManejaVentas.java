@@ -18,8 +18,8 @@ public class ManejaVentas {
      }
      
     //Agregar
-     public void Agregar(String ClaveVta, int SKU, int Cantidad, double PrecioUni,int dia, int mes,int año, int cliente) {
-        Ventas.add(new Venta(ClaveVta,SKU,Cantidad,PrecioUni,f.getDia(),f.getMes(),f.getAño(), cliente));
+     public void Agregar(String ClaveVta, int SKU, int Cantidad, double PrecioUni,int dia, int mes,int año, int cliente, int empleado) {
+        Ventas.add(new Venta(ClaveVta,SKU,Cantidad,PrecioUni,f.getDia(),f.getMes(),f.getAño(), cliente,empleado));
     }
      public int buscarVenta(String clave) {
         int posicion = -1;

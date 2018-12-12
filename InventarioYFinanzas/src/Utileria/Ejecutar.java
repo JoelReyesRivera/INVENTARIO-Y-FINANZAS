@@ -195,11 +195,11 @@ public class Ejecutar {
                        
                         ManejaInventarios.inventario.get(SKU).setExistencia(ManejaInventarios.inventario.get(SKU).getExistencia() - p);
                         if (cR==1) {
-                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(SKU).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (idCliente));
+                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(SKU).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (idCliente),idEmpleadoA);
                             ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(idCliente))).aumentarCompras();
                         }
                         else{
-                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(SKU).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (Cliente.contador));
+                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(SKU).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (Cliente.contador),idEmpleadoA);
                             ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(Cliente.contador))).aumentarCompras(); 
                         }
                         

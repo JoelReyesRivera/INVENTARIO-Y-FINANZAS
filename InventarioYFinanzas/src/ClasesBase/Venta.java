@@ -10,8 +10,9 @@ public class Venta {
     private int mes;
     private int año;
     private int idCliente;
+    private int idEmpleado;
 
-    public Venta(String ClaveVta, int SKUArt, int Cantidad, double PrecioUni, int dia, int mes, int año, int idCliente) {
+    public Venta(String ClaveVta, int SKUArt, int Cantidad, double PrecioUni, int dia, int mes, int año, int idCliente,int idEmpleado) {
         this.ClaveVta = ClaveVta;
         this.SKUArt = SKUArt;
         this.Cantidad = Cantidad;
@@ -20,10 +21,15 @@ public class Venta {
         this.mes = mes;
         this.año = año;
         this.idCliente = idCliente;
+        this.idEmpleado= idEmpleado;
     }
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+    
+    public void setIdEmpleado (int idEmpleado){
+        this.idEmpleado=idEmpleado;
     }
 
     public void setDia(int d) {
@@ -69,6 +75,10 @@ public class Venta {
     public int getIdCliente() {
         return idCliente;
     }
+    
+    public int getIdEmpleado (){
+        return idEmpleado;
+    }
 
     public void setClaveVta(String ClaveVta) {
         this.ClaveVta = ClaveVta;
@@ -91,6 +101,6 @@ public class Venta {
     }
 
     public String toString() {
-        return ("Clave de la venta :" + ClaveVta + ("\n") + "Cliente :" + idCliente + ("\n") + "SKU Articulo :" + SKUArt + ("\n") + "Cantidad de vendidos:" + Cantidad + ("\n") + "Precio Articulo: $" + PrecioUni +" MXN\nMonto: $"+monto()+" MXN"+ String.format("\nfecha: Dia %s Mes %s Año %s ", getDia(), getMes(), getAño())).toUpperCase();
+        return ("Clave de la venta :" + ClaveVta + ("\n") + "Cliente :" + idCliente + ("\n") + "Empleado :" + idEmpleado + ("\n") + "SKU Articulo :" + SKUArt + ("\n") + "Cantidad de vendidos:" + Cantidad + ("\n") + "Precio Articulo: $" + PrecioUni +" MXN\nMonto: $"+monto()+" MXN"+ String.format("\nfecha: Dia %s Mes %s Año %s ", getDia(), getMes(), getAño())).toUpperCase();
     }
 }
