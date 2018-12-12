@@ -2,23 +2,14 @@ package ClasesBase;
 
 public class Producto {
 
-    private int SKU;
     private double PrecioUni;
     private int Existencia;
 
-    public Producto(int SKU, double PrecioUni, int Existencia) {
-        this.SKU = SKU;
+    public Producto( double PrecioUni, int Existencia) {
         this.PrecioUni = PrecioUni;
         this.Existencia = Existencia;
     }
 
-    public int getSKU() {
-        return SKU;
-    }
-
-    public void SetSKU(int Sku) {
-        this.SKU = Sku;
-    }
 
     public double getPrecioUni() {
         return PrecioUni;
@@ -38,6 +29,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "\nSKU: " + SKU + "\nPRECIO: $" + PrecioUni + " MXN\nEXISTENCIA: " + Existencia;
+        return  "\nPRECIO: $" + PrecioUni + " MXN\nEXISTENCIA: " + Existencia;
     }
 }

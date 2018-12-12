@@ -6,8 +6,8 @@ public class Textil extends Producto {
     private String corte;
     private int talla;
 
-    public Textil(int SKU, double PrecioUni, int Existencia, String tela, String corte, int talla) {
-        super(SKU, PrecioUni, Existencia);
+    public Textil(double PrecioUni, int Existencia, String tela, String corte, int talla) {
+        super(PrecioUni, Existencia);
         this.tela = tela;
         this.corte = corte;
         this.talla = talla;

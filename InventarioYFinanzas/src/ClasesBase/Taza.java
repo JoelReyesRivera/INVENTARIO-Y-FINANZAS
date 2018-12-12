@@ -6,8 +6,8 @@ public class Taza extends Producto {
     private int tamano;
     private String color;
 
-    public Taza(int SKU, double PrecioUni, int Existencia, String material, int tamano, String color) {
-        super(SKU, PrecioUni, Existencia);
+    public Taza( double PrecioUni, int Existencia, String material, int tamano, String color) {
+        super(PrecioUni, Existencia);
         this.material = material;
         this.tamano = tamano;
         this.color = color;

@@ -26,9 +26,6 @@ public class Ejecutar {
         ManejaVentas manejaVentas = new ManejaVentas();
         ManejaInventario manejaInventario = new ManejaInventario();
         Fecha f = new Fecha();
-        manejaInventario.agregar(1, 50, 100, "Moderno", 5);
-        manejaInventario.agregar(2, 100, 50, "Barro",3, "Azul");
-        manejaInventario.agregar(3, 150, 75, "Sport", "Slim", 4);
         System.out.println("\033[34m------------ BIENVENIDO ------------\n\033[34m");
         
         int key;
@@ -152,16 +149,15 @@ public class Ejecutar {
                         } while (cR < 1 || cR > 2);
                         System.out.println("\nINGRESE EL SKU A VENDER.");
                         SKU = Keyboard.readInt();
-                        if (ManejaInventarios.buscarProducto(SKU) == -1) {
+                        if (ManejaInventarios.inventario.containsKey(SKU)) {
                             do {
                                 System.out.println("\033[31mEL SKU INGRESADO NO EXISTE, INGRESE EL SKU DE NUEVO\n");
                                 SKU = Keyboard.readInt();
-                            } while (ManejaInventarios.buscarProducto(SKU) == -1);
+                            } while (ManejaInventarios.inventario.containsKey(SKU));
                                
                         }
-                        int pos = ManejaInventarios.buscarProducto(SKU);
-                        System.out.println(ManejaInventarios.inventario.get(pos));
-                        if (ManejaInventarios.inventario.get(pos).getExistencia()==0) {
+                        System.out.println(ManejaInventarios.inventario.get(SKU));
+                        if (ManejaInventarios.inventario.get(SKU).getExistencia()==0) {
                             System.out.println("EXISTENCIA DEL PRODUCTO ES 0, NO SE PUEDE REALIZAR VENTA");
                             return;
                                     
@@ -182,8 +178,8 @@ public class Ejecutar {
                         do {
                             System.out.println("¿CUANTOS PRODUCTOS DESEA COMPRAR?");
                             p = Keyboard.readInt();
-                            if (p > ManejaInventarios.inventario.get(pos).getExistencia()) {
-                                System.out.println("EXISTENCIA INSUFICIENTE, CONTAMOS CON: " + ManejaInventarios.inventario.get(pos).getExistencia());
+                            if (p > ManejaInventarios.inventario.get(SKU).getExistencia()) {
+                                System.out.println("EXISTENCIA INSUFICIENTE, CONTAMOS CON: " + ManejaInventarios.inventario.get(SKU).getExistencia());
                                 p=0;
                             }
                             if (p<1) {
@@ -191,23 +187,23 @@ public class Ejecutar {
                             }
                         }while (p < 1);
                         
-                        float monto= (float) (ManejaInventarios.inventario.get(pos).getPrecioUni()*p);
+                        float monto= (float) (ManejaInventarios.inventario.get(SKU).getPrecioUni()*p);
                         
                         // ADICIONES A EMPLEADO
                         ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA))).aumentaVentas();
                         ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA))).aumentaComisiones((float) (monto*((Empleado)manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA))).getPorcentaje()));
                        
-                        ManejaInventarios.inventario.get(pos).setExistencia(ManejaInventarios.inventario.get(pos).getExistencia() - p);
+                        ManejaInventarios.inventario.get(SKU).setExistencia(ManejaInventarios.inventario.get(SKU).getExistencia() - p);
                         if (cR==1) {
-                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(pos).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (idCliente));
+                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(SKU).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (idCliente));
                             ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(idCliente))).aumentarCompras();
                         }
                         else{
-                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(pos).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (Cliente.contador));
+                            Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(SKU).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (Cliente.contador));
                             ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(Cliente.contador))).aumentarCompras(); 
                         }
                         
-                        System.out.println("\nLA EXISTENCIA DEL PRODUCTO A CAMBIADO A "+ManejaInventarios.inventario.get(pos).getExistencia()+"\n");
+                        System.out.println("\nLA EXISTENCIA DEL PRODUCTO A CAMBIADO A "+ManejaInventarios.inventario.get(SKU).getExistencia()+"\n");
                         
                         System.out.println("\033[32mVENTA REALIZADA CON EXITO\033[34m");
                         
@@ -235,21 +231,20 @@ public class Ejecutar {
                             } else{
                                 int posmV=Manejaventas.buscarVenta(CVm);
                                 int idmAV=Manejaventas.Ventas.get(posmV).getCSKUArt();
-                                int posAV=ManejaInventarios.buscarProducto(idmAV);
-                                ManejaInventarios.inventario.get(posAV).setExistencia((ManejaInventarios.inventario.get(posAV).getExistencia())+Manejaventas.Ventas.get(posmV).getCantidad());
+                                ManejaInventarios.inventario.get(idmAV).setExistencia((ManejaInventarios.inventario.get(idmAV).getExistencia())+Manejaventas.Ventas.get(posmV).getCantidad());
                                 do {
                                     System.out.println("\nINGRESE LA NUEVA CANTIDAD");
                                     newCant=Keyboard.readInt();
                                     if (newCant<1) {
                                         System.out.println("CANTIDAD INVALIDA");
                                     }
-                                    if (newCant > ManejaInventarios.inventario.get(posAV).getExistencia()) {
-                                        System.out.println("EXISTENCIA INSUFICIENTE, CONTAMOS CON: " + ManejaInventarios.inventario.get(posAV).getExistencia());
+                                    if (newCant > ManejaInventarios.inventario.get(idmAV).getExistencia()) {
+                                        System.out.println("EXISTENCIA INSUFICIENTE, CONTAMOS CON: " + ManejaInventarios.inventario.get(idmAV).getExistencia());
                                         p = 0;
                                     }
                                 } while (newCant<1);
                                 Manejaventas.Ventas.get(posmV).setCantidad(newCant);
-                                ManejaInventarios.inventario.get(posAV).setExistencia((ManejaInventarios.inventario.get(posAV).getExistencia())-newCant);
+                                ManejaInventarios.inventario.get(idmAV).setExistencia((ManejaInventarios.inventario.get(idmAV).getExistencia())-newCant);
                             }
                         } while (CVm.trim().isEmpty());
                     }
@@ -335,7 +330,7 @@ public class Ejecutar {
                         SKU = Keyboard.readInt();
                         if (SKU < 0) {
                             System.out.println("\033[31mSKU INVALIDO\n\033[34m");
-                        } else if (manejaInventario.buscarProducto(SKU) != -1) {
+                        } else if (manejaInventario.inventario.containsKey(SKU)) {
                             System.out.println("\033[31mSKU YA EXISTENTE\n\033[34m");
                             SKU = -1;
                         }
@@ -378,7 +373,8 @@ public class Ejecutar {
                                     System.out.println("\033[31mTALLA INVALIDA\n\033[34m");
                                 }
                             } while (talla < 0);
-                            manejaInventario.agregar(SKU, precio, existencia, tela, corte, talla);
+                            Textil textil = new Textil (precio, existencia, tela, corte, talla); 
+                            manejaInventario.agregar(SKU,textil);
                             break;
                         // TAZA
                         case 2:
@@ -403,7 +399,8 @@ public class Ejecutar {
                                     System.out.println("\033[31mTAMAÑO INVALIDA\n\033[34m");
                                 }
                             } while (tamano < 0);
-                            manejaInventario.agregar(SKU, precio, existencia, material, tamano, color);
+                            Taza taza = new Taza (precio, existencia, material, tamano, color);
+                            manejaInventario.agregar(SKU,taza);
                             break;
                         // TARRO
                         case 3:
@@ -421,19 +418,19 @@ public class Ejecutar {
                                     System.out.println("\033[31mTAMAÑO INVALIDA\n\033[34m");
                                 }
                             } while (tamano < 0);
-                            manejaInventario.agregar(SKU, precio, existencia, tipo, tamano);
+                            Tarro tarro = new Tarro (precio, existencia, tipo, tamano); 
+                            manejaInventario.agregar(SKU,tarro);
                             break;
                         default:
                     }
                     System.out.println("\n\033[32mPRODUCTO AGREGADO CORRECTAMENTE\033[34m");
-                    int posAP = manejaInventario.buscarProducto(SKU);
-                    System.out.println(manejaInventario.inventario.get(posAP));
+                    System.out.println(manejaInventario.inventario.get(SKU));
                     break;
                 case 2:
                     System.out.println("\nINGRESA EL SKU DEL PRODUCTO A BUSCAR");
                     int idBP = Keyboard.readInt();
-                    if (manejaInventario.buscarProducto(idBP) != -1) {
-                        System.out.println(manejaInventario.inventario.get(manejaInventario.buscarProducto(idBP)));
+                    if (manejaInventario.inventario.containsKey(idBP)) {
+                        System.out.println(manejaInventario.inventario.get(idBP));
                     } else {
                         System.out.println("\033[31mPRODUCTO INEXISTENTE\n\033[34m");
                     }
@@ -441,20 +438,19 @@ public class Ejecutar {
                 case 3:
                     System.out.println("INTRODUZCA EL SKU DEL PRODUCTO POR MODIFICAR");
                     int modP = Keyboard.readInt();
-                    if (manejaInventario.buscarProducto(modP) != -1) {
-                        int pos = manejaInventario.buscarProducto(modP);
+                    if (manejaInventario.inventario.containsKey(modP)) {
                         int keyModE;
                         do {
                             System.out.println("\n\033[33m-----\nEL PRODUCTO A MODIFICAR ES...");
-                            System.out.println(manejaInventario.inventario.get(pos));
+                            System.out.println(manejaInventario.inventario.get(modP));
                             System.out.println("\n1.- PRECIO\n2.- EXISTENCIA");
-                            if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                            if (manejaInventario.inventario.get(modP) instanceof Textil) {
                                 System.out.println("3.- TELA\n4.- CORTE\n5.- TALLA");
                             }
-                            if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                            if (manejaInventario.inventario.get(modP) instanceof Taza) {
                                 System.out.println("3.- MATERIAL\n4.- TAMAÑO\n5.- COLOR");
                             }
-                            if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                            if (manejaInventario.inventario.get(modP) instanceof Tarro) {
                                 System.out.println("3.- TIPO\n4.- TAMAÑO");
                             }
                             System.out.println("\033[33m0.- SALIR\033[34m");
@@ -469,7 +465,7 @@ public class Ejecutar {
                                             System.out.println("\033[31mPRECIO INVALIDO\n\033[34m");
                                         }
                                     } while (Double.isNaN(newPrecio) || newPrecio < 0);
-                                    manejaInventario.inventario.get(pos).setPrecioUni(newPrecio);
+                                    manejaInventario.inventario.get(modP).setPrecioUni(newPrecio);
                                     break;
                                 case 2:
                                     int newExistencia;
@@ -480,10 +476,10 @@ public class Ejecutar {
                                             System.out.println("\033[31mEXISTENCIA INVALIDA\n\033[34m");
                                         }
                                     } while (newExistencia < 0);
-                                    manejaInventario.inventario.get(pos).setExistencia(newExistencia);
+                                    manejaInventario.inventario.get(modP).setExistencia(newExistencia);
                                     break;
                                 case 3:
-                                    if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                    if (manejaInventario.inventario.get(modP) instanceof Textil) {
                                         String newTela;
                                         do {
                                             System.out.println("\nINGRESE LA NUEVA TELA");
@@ -492,8 +488,8 @@ public class Ejecutar {
                                                 System.out.println("\033[31mTELA INVALIDA\n\033[34m");
                                             }
                                         } while (newTela.trim().isEmpty());
-                                        ((Textil) manejaInventario.inventario.get(pos)).SetTela(newTela);
-                                    } else if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                        ((Textil) manejaInventario.inventario.get(modP)).SetTela(newTela);
+                                    } else if (manejaInventario.inventario.get(modP) instanceof Taza) {
                                         String newMaterial;
                                         do {
                                             System.out.println("\nINGRESE EL NUEVO MATERIAL");
@@ -502,8 +498,8 @@ public class Ejecutar {
                                                 System.out.println("\033[31mMATERIAL INVALIDO\n\033[34m");
                                             }
                                         } while (newMaterial.trim().isEmpty());
-                                        ((Taza) manejaInventario.inventario.get(pos)).SetMaterial(newMaterial);
-                                    } else if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                        ((Taza) manejaInventario.inventario.get(modP)).SetMaterial(newMaterial);
+                                    } else if (manejaInventario.inventario.get(modP) instanceof Tarro) {
                                         String newTipo;
                                         do {
                                             System.out.println("\nINGRESE EL NUEVO TIPO");
@@ -512,11 +508,11 @@ public class Ejecutar {
                                                 System.out.println("\033[31mTIPO INVALIDO\n\033[34m");
                                             }
                                         } while (newTipo.trim().isEmpty());
-                                        ((Tarro) manejaInventario.inventario.get(pos)).SetTipo(newTipo);
+                                        ((Tarro) manejaInventario.inventario.get(modP)).SetTipo(newTipo);
                                     }
                                     break;
                                 case 4:
-                                    if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                    if (manejaInventario.inventario.get(modP) instanceof Textil) {
                                         String newCorte;
                                         do {
                                             System.out.println("\nINGRESE EL NUEVO CORTE");
@@ -525,8 +521,8 @@ public class Ejecutar {
                                                 System.out.println("\033[31mCORTE INVALIDO\n\033[34m");
                                             }
                                         } while (newCorte.trim().isEmpty());
-                                        ((Textil) manejaInventario.inventario.get(pos)).SetCorte(newCorte);
-                                    } else if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                        ((Textil) manejaInventario.inventario.get(modP)).SetCorte(newCorte);
+                                    } else if (manejaInventario.inventario.get(modP) instanceof Taza) {
                                         int newTamano;
                                         do {
                                             System.out.println("TAMAÑO");
@@ -535,8 +531,8 @@ public class Ejecutar {
                                                 System.out.println("\033[31mTAMAÑO INVALIDO\n\033[34m");
                                             }
                                         } while (newTamano < 0);
-                                        ((Taza) manejaInventario.inventario.get(pos)).SetTamano(newTamano);
-                                    } else if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                        ((Taza) manejaInventario.inventario.get(modP)).SetTamano(newTamano);
+                                    } else if (manejaInventario.inventario.get(modP) instanceof Tarro) {
                                         int newTamano;
                                         do {
                                             System.out.println("TAMAÑO");
@@ -545,14 +541,14 @@ public class Ejecutar {
                                                 System.out.println("\033[31mTAMAÑO INVALIDO\n\033[34m");
                                             }
                                         } while (newTamano < 0);
-                                        ((Tarro) manejaInventario.inventario.get(pos)).SetTamano(newTamano);
+                                        ((Tarro) manejaInventario.inventario.get(modP)).SetTamano(newTamano);
                                     }
                                     break;
                                 case 5:
-                                    if (manejaInventario.inventario.get(pos) instanceof Tarro) {
+                                    if (manejaInventario.inventario.get(modP) instanceof Tarro) {
                                         System.out.println("\033[31mOPCION INVALIDA\033[34m");
                                     } else {
-                                        if (manejaInventario.inventario.get(pos) instanceof Textil) {
+                                        if (manejaInventario.inventario.get(modP) instanceof Textil) {
                                             int newTalla;
                                             do {
                                                 System.out.println("\nINGRESE LA NUEVA TALLA");
@@ -561,9 +557,9 @@ public class Ejecutar {
                                                     System.out.println("\033[31mTALLA INVALIDA\033[34m");
                                                 }
                                             } while (newTalla < 0);
-                                            ((Textil) manejaInventario.inventario.get(pos)).SetTalla(newTalla);
+                                            ((Textil) manejaInventario.inventario.get(modP)).SetTalla(newTalla);
                                         }
-                                        if (manejaInventario.inventario.get(pos) instanceof Taza) {
+                                        if (manejaInventario.inventario.get(modP) instanceof Taza) {
                                             String newColor;
                                             do {
                                                 System.out.println("COLOR");
@@ -572,7 +568,7 @@ public class Ejecutar {
                                                     System.out.println("\033[31mCOLOR INVALIDO\n\033[34m");
                                                 }
                                             } while (newColor.trim().isEmpty());
-                                            ((Taza) manejaInventario.inventario.get(pos)).SetColor(newColor);
+                                            ((Taza) manejaInventario.inventario.get(modP)).SetColor(newColor);
                                         }
                                     }
                                     break;
@@ -589,7 +585,7 @@ public class Ejecutar {
                 case 4:
                     if (!manejaInventario.inventario.isEmpty()) {
                         System.out.println("\nPRODUCTOS REGISTRADOS");
-                        manejaInventario.imprimir(1);
+                        manejaInventario.imprimir();
                     } else {
                         System.out.println("\033[31mNO HAY PRODUCTOS REGISTRADOS\033[34m");
                     }

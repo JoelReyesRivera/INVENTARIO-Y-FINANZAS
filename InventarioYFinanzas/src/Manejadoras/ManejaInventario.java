@@ -4,84 +4,49 @@ import ClasesBase.Producto;
 import ClasesBase.Tarro;
 import ClasesBase.Taza;
 import ClasesBase.Textil;
-import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class ManejaInventario {
 
-    public ArrayList<Producto> inventario;
+    public Hashtable <Integer,Producto> inventario;
 
     //CONSTRUCTOR
     public ManejaInventario() {
-        inventario = new ArrayList<Producto>();
+        inventario = new Hashtable();
     }
 
     //AGREGAR TARRO
-    public void agregar(int SKU, double PrecioUni, int Existencia, String tipo, int tamaño) {
-        inventario.add(new Tarro(SKU, PrecioUni, Existencia, tipo, tamaño));
+    public void agregar(int SKU, Tarro tarro) {
+        inventario.put(SKU, tarro);
     }
 
     //AGREGAR TAZA
-    public void agregar(int SKU, double PrecioUni, int Existencia, String material, int tamaño, String color) {
-        inventario.add(new Taza(SKU, PrecioUni, Existencia, material, tamaño, color));
+    public void agregar(int SKU, Taza taza) {
+        inventario.put(SKU, taza);
     }
 
     //AGREGAR TEXTIL
-    public void agregar(int SKU, double PrecioUni, int Existencia, String tela, String corte, int talla) {
-        inventario.add(new Textil(SKU, PrecioUni, Existencia, tela, corte, talla));
+    public void agregar(int SKU, Textil textil){
+        inventario.put(SKU, textil);
     }
 
     //IMPRIMIR
-    public void imprimir(int caso) {
-        switch (caso) {
-            case 1:
-                for (Producto producto : inventario) {
-                    if (producto != null) {
-                        System.out.println(producto);
-                    }
-                }
-                break;
-            case 2:
-                for (Producto producto : inventario) {
-                    if (producto != null) {
-                        if (producto instanceof Tarro) {
-                            System.out.println((Tarro) producto);
-                        }
-                    }
-                }
-                break;
-            case 3:
-                for (Producto producto : inventario) {
-                    if (producto != null) {
-                        if (producto instanceof Taza) {
-                            System.out.println((Taza) producto);
-                        }
-                    }
-                }
-                break;
-            case 4:
-                for (Producto producto : inventario) {
-                    if (producto != null) {
-                        if (producto instanceof Textil) {
-                            System.out.println((Textil) producto);
-                        }
-                    }
-                }
-                break;
-        }
-    }
-
-    //BUSCAR PRODUCTO
-    public int buscarProducto(int SKU) {
-        int posicion = -1;
-        for (Producto producto : inventario) {
-            if (producto != null) {
-                if (producto.getSKU() == SKU) {
-                    posicion = inventario.indexOf(producto);
-                    return posicion;
-                }
-
+    public void imprimir() {
+        int SKU;
+        Enumeration <Integer> enumeracion= inventario.keys();
+        while(enumeracion.hasMoreElements()){
+        SKU = enumeracion.nextElement();
+        if (inventario.get(SKU) instanceof Textil) {
+                System.out.println("SKU : " + SKU);
+                System.out.println((Textil)inventario.get(SKU));
             }
-        }
-        return posicion;
+        if (inventario.get(SKU) instanceof Tarro) {
+                System.out.println((Tarro)inventario.get(SKU));
+            }
+        if (inventario.get(SKU) instanceof Taza) {
+                System.out.println((Taza)inventario.get(SKU));
+            }
+    }
     }
 }
