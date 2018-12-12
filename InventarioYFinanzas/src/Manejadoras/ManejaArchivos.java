@@ -6,6 +6,7 @@ import ClasesBase.Persona;
 import ClasesBase.Tarro;
 import ClasesBase.Taza;
 import ClasesBase.Textil;
+import ClasesBase.Venta;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
@@ -168,7 +169,6 @@ public class ManejaArchivos {
     // TXT PERSONAS
     
     public void guardarPersonas(ManejaPersonas manejaPersona) {
-        
         try {
             int tipoPersona;
             String nombre, apellido, rfc;
@@ -251,7 +251,6 @@ public class ManejaArchivos {
                             }
                             break;
                         default:
-                            throw new AssertionError();
                     }
                 } catch (NumberFormatException formatoNumero) {
                     System.out.println("LINEA ERRONEA " + linea);
@@ -292,5 +291,149 @@ public class ManejaArchivos {
     }
     
     */
+    
+    // TXT VENTAS
+    
+    public void guardarVentas(ManejaVentas manejaVentas) {
+        try {
+            String ClaveVta;
+            int SKUArt, Cantidad;
+            double PrecioUni;
+            int dia, mes, año;
+            int idCliente, idEmpleado;
+            FileWriter fw = new FileWriter("ventas.txt");
+            PrintWriter file = new PrintWriter(fw);
+            int key;
+            for (Venta venta : manejaVentas.Ventas) {
+                if (venta != null) {
+                    ClaveVta=venta.getClaveVta();
+                    SKUArt=venta.getCSKUArt();
+                    Cantidad=venta.getCantidad();
+                    PrecioUni=venta.getPrecioUni();
+                    dia=venta.getDia();
+                    mes=venta.getMes();
+                    año=venta.getAño();
+                    idCliente=venta.getIdCliente();
+                    idEmpleado=venta.getIdEmpleado();
+                    file.println(ClaveVta+" "+SKUArt+" "+Cantidad+" "+PrecioUni+" "+dia+" "+mes+" "+año+" "+idCliente+" "+idEmpleado);
+                }
+            }
+            file.close();
+        } catch (IOException ex) {
+            System.out.println("ERROR DE ENTRADA Y SALIDA");
+        }
+    }
+
+    public void lecturaVentas(ManejaVentas manejaVentas) {
+        
+        String linea;
+        try {
+            String ClaveVta;
+            int SKUArt, Cantidad;
+            double PrecioUni;
+            int dia, mes, año;
+            int idCliente, idEmpleado;
+            FileReader file = new FileReader(inventario);
+            StringTokenizer tokenizer = null;
+            BufferedReader archivoEntrada = new BufferedReader(file);
+            linea = archivoEntrada.readLine();
+            while (linea != null) {
+                tokenizer = new StringTokenizer(linea);
+                ClaveVta=tokenizer.nextToken();
+                try{
+                    SKUArt=Integer.parseInt(tokenizer.nextToken());
+                    Cantidad=Integer.parseInt(tokenizer.nextToken());
+                    PrecioUni=Double.parseDouble(tokenizer.nextToken());
+                    dia=Integer.parseInt(tokenizer.nextToken());
+                    mes=Integer.parseInt(tokenizer.nextToken());
+                    año=Integer.parseInt(tokenizer.nextToken());
+                    idCliente=Integer.parseInt(tokenizer.nextToken());
+                    idEmpleado=Integer.parseInt(tokenizer.nextToken());
+                    if (manejaVentas.buscarVenta(ClaveVta)==-1) {
+                        manejaVentas.Agregar(ClaveVta, año, Cantidad, PrecioUni, dia, mes, año, idCliente, idEmpleado);
+                    }
+                } catch (NumberFormatException formatoNumero) {
+                    System.out.println("LINEA ERRONEA " + linea);
+                }
+                linea = archivoEntrada.readLine();
+            }
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("NO SE ENCONTRO EL ARCHIVO");
+        } catch (IOException ex) {
+            System.out.println("ERROR DE ENTRADA Y SALIDA");
+        }
+    }
+    
+    // TXT HISTORICO 
+    
+    public void guardarHistorico(ManejaHistorico manejaHistorico) {
+        try {
+            String ClaveVta;
+            int SKUArt, Cantidad;
+            double PrecioUni;
+            int dia, mes, año;
+            int idCliente, idEmpleado;
+            FileWriter fw = new FileWriter("historico.txt");
+            PrintWriter file = new PrintWriter(fw);
+            int key;
+            for (Venta venta : manejaHistorico.Historico) {
+                if (venta != null) {
+                    ClaveVta=venta.getClaveVta();
+                    SKUArt=venta.getCSKUArt();
+                    Cantidad=venta.getCantidad();
+                    PrecioUni=venta.getPrecioUni();
+                    dia=venta.getDia();
+                    mes=venta.getMes();
+                    año=venta.getAño();
+                    idCliente=venta.getIdCliente();
+                    idEmpleado=venta.getIdEmpleado();
+                    file.println(ClaveVta+" "+SKUArt+" "+Cantidad+" "+PrecioUni+" "+dia+" "+mes+" "+año+" "+idCliente+" "+idEmpleado);
+                }
+            }
+            file.close();
+        } catch (IOException ex) {
+            System.out.println("ERROR DE ENTRADA Y SALIDA");
+        }
+    }
+
+    public void lecturaHistorico(ManejaHistorico manejaHistorico) {
+        
+        String linea;
+        try {
+            String ClaveVta;
+            int SKUArt, Cantidad;
+            double PrecioUni;
+            int dia, mes, año;
+            int idCliente, idEmpleado;
+            FileReader file = new FileReader(inventario);
+            StringTokenizer tokenizer = null;
+            BufferedReader archivoEntrada = new BufferedReader(file);
+            linea = archivoEntrada.readLine();
+            while (linea != null) {
+                tokenizer = new StringTokenizer(linea);
+                ClaveVta=tokenizer.nextToken();
+                try{
+                    SKUArt=Integer.parseInt(tokenizer.nextToken());
+                    Cantidad=Integer.parseInt(tokenizer.nextToken());
+                    PrecioUni=Double.parseDouble(tokenizer.nextToken());
+                    dia=Integer.parseInt(tokenizer.nextToken());
+                    mes=Integer.parseInt(tokenizer.nextToken());
+                    año=Integer.parseInt(tokenizer.nextToken());
+                    idCliente=Integer.parseInt(tokenizer.nextToken());
+                    idEmpleado=Integer.parseInt(tokenizer.nextToken());
+                    manejaHistorico.Agregar(ClaveVta, SKUArt, Cantidad, PrecioUni, dia, mes, año, idCliente, idEmpleado);
+                } catch (NumberFormatException formatoNumero) {
+                    System.out.println("LINEA ERRONEA " + linea);
+                }
+                linea = archivoEntrada.readLine();
+            }
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("NO SE ENCONTRO EL ARCHIVO");
+        } catch (IOException ex) {
+            System.out.println("ERROR DE ENTRADA Y SALIDA");
+        }
+    }
     
 }

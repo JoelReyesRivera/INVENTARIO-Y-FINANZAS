@@ -6,22 +6,22 @@ import ClasesBase.Persona;
 public class ManejaFinanzas {
 
     //ImprimirVentasPorDia
-    public void Ventadia(int d, int m, int a, ManejaVentas o) {
+    public void Ventadia(int d, int m, int a, ManejaHistorico o) {
         double VAD = 0;
-        for (int i = 0; i < o.Ventas.size(); i++) {
-            if ((o.Ventas.get(i).getDia() == d) && (o.Ventas.get(i).getMes() == m) && (o.Ventas.get(i).getAño() == a)) {
-                VAD += o.Ventas.get(i).monto();
+        for (int i = 0; i < o.Historico.size(); i++) {
+            if ((o.Historico.get(i).getDia() == d) && (o.Historico.get(i).getMes() == m) && (o.Historico.get(i).getAño() == a)) {
+                VAD += o.Historico.get(i).monto();
             }
         }
         System.out.println("GANANCIAS DEL DIA  " + d + "/" + m + "/" + a);
         System.out.println("$ " + VAD+" MXN");
     }
 
-    public void VentaMes(int m, int a, ManejaVentas o) {
+    public void VentaMes(int m, int a, ManejaHistorico o) {
         double VAM = 0;
-        for (int i = 0; i < o.Ventas.size(); i++) {
-            if (o.Ventas.get(i).getMes() == m && o.Ventas.get(i).getAño() == a) {
-                VAM += o.Ventas.get(i).monto();
+        for (int i = 0; i < o.Historico.size(); i++) {
+            if (o.Historico.get(i).getMes() == m && o.Historico.get(i).getAño() == a) {
+                VAM += o.Historico.get(i).monto();
             }
         }
         System.out.println("GANANCIAS DEL MES  " + m + "/" + a);
@@ -39,12 +39,12 @@ public class ManejaFinanzas {
     }
     
     public void imprimirNominaEmpleados(ManejaPersonas manejaPersona){
-        for (Persona persona : manejaPersona.personas) {
-            if (persona instanceof Empleado) {
-                System.out.println("EMPLEADO: "+persona.getNombre()+" "+persona.getApellido());
-                System.out.println("SUELDO: $"+((Empleado)persona).getSueldo()+" MXN");
-                System.out.println("");
+        double nomina =0;
+        for (int i = 0; i < manejaPersona.personas.size(); i++) {
+            if(manejaPersona.personas.get(i) instanceof Empleado){
+            nomina += ((Empleado) manejaPersona.personas.get(i)).getComisiones() + ((Empleado) manejaPersona.personas.get(i)).getSueldo();
             }
         }
+        System.out.println("LA NOMINA TOTAL ACTUAL ES: $" + nomina);
     }
 }

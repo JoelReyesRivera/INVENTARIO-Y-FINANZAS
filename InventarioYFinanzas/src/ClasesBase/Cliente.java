@@ -22,6 +22,7 @@ public class Cliente extends Persona implements Serializable{
         super(nombre, apellido, telefono, RFC);
         this.idCliente = idCliente;
         this.totalCompras = totalCompras;
+        contador++;
     }
     
     // Sin RFC

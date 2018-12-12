@@ -32,6 +32,7 @@ public class Empleado extends Persona implements Serializable{
         this.ventas = ventas;
         this.comisiones = comisiones;
         this.porcentaje = porcentaje;
+        contIdE++;
     }
 
     // Sin RFC

@@ -11,6 +11,7 @@ import Manejadoras.ManejaVentas;
 import Manejadoras.ManejaFinanzas;
 import ClasesBase.Fecha;
 import Manejadoras.ManejaArchivos;
+import Manejadoras.ManejaHistorico;
 
 /**
  * ITNM - Campus Culiacan Programacion Orientada a Objetos Unidad 3
@@ -23,14 +24,19 @@ public class Ejecutar {
 
         Ejecutar main = new Ejecutar();
         ManejaPersonas manejaPersona = new ManejaPersonas();
+        ManejaHistorico manejaHistorico=new ManejaHistorico();
         ManejaFinanzas manejaFinanza = new ManejaFinanzas();
         ManejaVentas manejaVentas = new ManejaVentas();
         ManejaInventario manejaInventario = new ManejaInventario();
         ManejaArchivos archivos = new ManejaArchivos ("inventario.txt");
         ManejaArchivos archivoPersonasB = new ManejaArchivos ("personasB.dat");
         ManejaArchivos archivoPersonas = new ManejaArchivos ("personas.txt");
+        ManejaArchivos archivoVentas = new ManejaArchivos("ventas.txt");
+        ManejaArchivos archivoHistorico = new ManejaArchivos("historico.txt");
+        archivoHistorico.lecturaHistorico(manejaHistorico);
         archivos.lecturaInventario(manejaInventario);
         archivoPersonas.lecturaPersonas(manejaPersona);
+        archivoVentas.lecturaVentas(manejaVentas);
         Fecha f = new Fecha();
         System.out.println("\033[34m------------ BIENVENIDO ------------\n\033[34m");
         
@@ -38,14 +44,14 @@ public class Ejecutar {
         do {
             System.out.println(manejaVentas.f);
             System.out.println("\033[33m------------------------------------\nINGRESE LA OPCION QUE DESEA REALIZAR\n");
-            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- FINALIZAR DÍA\n7.- GUARDAR BINARIO DE PERSONAS\n0.- SALIR\033[34m");
+            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- REALIZAR CORTE DE LA CAJA\n7.- FINALIZAR DÍA\n8.- GUARDAR PERSONAS EN BINARIO\n0.- SALIR\033[34m");
             key = Keyboard.readInt();
             switch (key) {
                 case 1:
-                    main.vender(manejaPersona, manejaInventario, manejaVentas, f);
+                    main.vender(manejaPersona, manejaInventario, manejaVentas, f, manejaHistorico);
                     break;
                 case 2:
-                    main.menuFinanzas(manejaFinanza, manejaVentas, manejaPersona);
+                    main.menuFinanzas(manejaFinanza, manejaHistorico, manejaPersona);
                     break;
                 case 3:
                     main.menuProductos(manejaInventario);
@@ -57,9 +63,12 @@ public class Ejecutar {
                     main.menuClientes(manejaPersona);
                     break;
                 case 6:
-                    manejaVentas.f.finalizarDia();
+                    manejaHistorico.hacerCorte(manejaVentas, manejaPersona);
                     break;
                 case 7:
+                    manejaVentas.f.finalizarDia();
+                    break;
+                case 8:
                     archivoPersonasB.guardarPersonasB(manejaPersona);
                     break;
                 /* 
@@ -71,6 +80,8 @@ public class Ejecutar {
                 case 0:
                     archivos.guardarInventario(manejaInventario);
                     archivoPersonas.guardarPersonas(manejaPersona);
+                    archivoVentas.guardarVentas(manejaVentas);
+                    archivoHistorico.guardarHistorico(manejaHistorico);
                     break;
                 default:
                     System.out.println("\033[31mOPCION INVALIDA\n\033[34m");
@@ -78,7 +89,7 @@ public class Ejecutar {
         } while (key != 0);
     }
 
-    public void vender(ManejaPersonas manejaPersona, ManejaInventario ManejaInventarios, ManejaVentas Manejaventas, Fecha f) {
+    public void vender(ManejaPersonas manejaPersona, ManejaInventario ManejaInventarios, ManejaVentas Manejaventas, Fecha f, ManejaHistorico manejaHistorico) {
 
         int cR, SKU;
         int idEmpleadoA, posIdEmpleadoA;
@@ -94,6 +105,7 @@ public class Ejecutar {
             System.out.println("2.- MOSTRAR LAS VENTAS");
             System.out.println("3.- MODIFICAR LA CANTIDAD");
             System.out.println("4.- BORRAR VENTA");
+            System.out.println("5.- IMPRIMIR HISOTORICO DE VENTAS");
             System.out.println("\033[33m0.- SALIR\033[34m");
             
             opcion = Keyboard.readInt();
@@ -279,12 +291,15 @@ public class Ejecutar {
                                 CVm = "";
                             } else {
                                 Manejaventas.Borrar(CVm,ManejaInventarios,manejaPersona);
-                                System.out.println("\n\033[32mBENTA ELIMINADO CORRECTAMENTE\033[34m");
+                                System.out.println("\n\033[32mVENTA ELIMINADO CORRECTAMENTE\033[34m");
                             }
                         } while (CVm.trim().isEmpty());
                     }
                     break;
                 case 0:
+                    break;
+                case 5 : 
+                    manejaHistorico.Imprimir();
                     break;
                 default:
                     System.out.println("*INTRODUCE UNA OPCIÓN VALIDA*");
@@ -292,14 +307,14 @@ public class Ejecutar {
         } while (opcion != 0);
     }
 
-    public void menuFinanzas(ManejaFinanzas ManejaFinanza, ManejaVentas manejaVentas, ManejaPersonas manejaPersona) {
+    public void menuFinanzas(ManejaFinanzas ManejaFinanza, ManejaHistorico manejaHistorico, ManejaPersonas manejaPersona) {
         int opcion = 0;
         do {
             System.out.println();
             System.out.println("\n\033[33m------------- FINANZAS -------------\n");
             System.out.println("1.- BUSCAR INGRESOS DE UN DIA");
             System.out.println("2.- BUSCAR INGRESOS DEL MES");
-            System.out.println("3.- IMPRIMIR NOMINA");
+            System.out.println("3.- IMPRIMIR NOMINA ACTUAL" );
             System.out.println("\033[33m0.- SALIR\033[34m");
             opcion = Keyboard.readInt();
             switch (opcion) {
@@ -313,19 +328,18 @@ public class Ejecutar {
                     m = Keyboard.readInt();
                     System.out.println("ESCRIBE EL AÑO");
                     a = Keyboard.readInt();
-                    ManejaFinanza.Ventadia(d, m, a, manejaVentas);
+                    ManejaFinanza.Ventadia(d, m, a, manejaHistorico);
                     break;
                 case 2:
                     System.out.println("ESCRIBE EL MES");
                     m = Keyboard.readInt();
                     System.out.println("ESCRIBE EL AÑO");
                     a = Keyboard.readInt();
-                    ManejaFinanza.VentaMes(m, a, manejaVentas);
+                    ManejaFinanza.VentaMes(m, a, manejaHistorico);
                     break;
                 case 3:
                     System.out.println("");
-                    ManejaFinanza.imprimirNominaEmpleados(manejaPersona);
-                    System.out.println("\nLA NOMINA TOTAL ES DE $" + ManejaFinanza.calcularNomina(manejaPersona) + " MXN");
+                    ManejaFinanza.imprimirNominaEmpleados(manejaPersona);           
                     break;
                 case 0:
                     break;
