@@ -10,6 +10,7 @@ import Manejadoras.ManejaInventario;
 import Manejadoras.ManejaVentas;
 import Manejadoras.ManejaFinanzas;
 import ClasesBase.Fecha;
+import Manejadoras.ManejaArchivos;
 
 /**
  * ITNM - Campus Culiacan Programacion Orientada a Objetos Unidad 3
@@ -25,6 +26,8 @@ public class Ejecutar {
         ManejaFinanzas manejaFinanza = new ManejaFinanzas();
         ManejaVentas manejaVentas = new ManejaVentas();
         ManejaInventario manejaInventario = new ManejaInventario();
+        ManejaArchivos archivos = new ManejaArchivos ("inventario.txt");
+        archivos.lecturaInventario(manejaInventario);
         Fecha f = new Fecha();
         System.out.println("\033[34m------------ BIENVENIDO ------------\n\033[34m");
         
@@ -54,6 +57,7 @@ public class Ejecutar {
                     manejaVentas.f.finalizarDia();
                     break;
                 case 0:
+                    archivos.guardarInventario(manejaInventario);
                     break;
                 default:
                     System.out.println("\033[31mOPCION INVALIDA\n\033[34m");
