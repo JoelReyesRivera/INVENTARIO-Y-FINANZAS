@@ -11,6 +11,7 @@ import Manejadoras.ManejaVentas;
 import Manejadoras.ManejaFinanzas;
 import ClasesBase.Fecha;
 import Manejadoras.ManejaArchivos;
+import Manejadoras.ManejaHistorico;
 
 /**
  * ITNM - Campus Culiacan Programacion Orientada a Objetos Unidad 3
@@ -23,6 +24,7 @@ public class Ejecutar {
 
         Ejecutar main = new Ejecutar();
         ManejaPersonas manejaPersona = new ManejaPersonas();
+        ManejaHistorico manejaHistorico=new ManejaHistorico();
         ManejaFinanzas manejaFinanza = new ManejaFinanzas();
         ManejaVentas manejaVentas = new ManejaVentas();
         ManejaInventario manejaInventario = new ManejaInventario();
@@ -35,7 +37,7 @@ public class Ejecutar {
         do {
             System.out.println(manejaVentas.f);
             System.out.println("\033[33m------------------------------------\nINGRESE LA OPCION QUE DESEA REALIZAR\n");
-            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- FINALIZAR DÍA\n0.- SALIR\033[34m");
+            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- REALIZAR CORTE DE LA CAJA\n7.- FINALIZAR DÍA\n0.- SALIR\033[34m");
             key = Keyboard.readInt();
             switch (key) {
                 case 1:
@@ -54,6 +56,9 @@ public class Ejecutar {
                     main.menuClientes(manejaPersona);
                     break;
                 case 6:
+                    manejaHistorico.hacerCorte(manejaVentas, manejaPersona);
+                    break;
+                case 7:
                     manejaVentas.f.finalizarDia();
                     break;
                 case 0:
