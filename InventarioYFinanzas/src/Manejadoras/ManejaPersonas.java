@@ -15,8 +15,8 @@ public class ManejaPersonas {
     }
 
     //AGREGAR EMPLEADO CON TODOS SUS ATRIBUTOS
-    public void agregar(String nombre, String apellido, long telefono, String RFC, double sueldo) {
-        personas.add(new Empleado(nombre, apellido, telefono, RFC, sueldo));
+    public void agregar(String nombre, String apellido, long telefono, String RFC, double sueldo, double porcentaje) {
+        personas.add(new Empleado(nombre, apellido, telefono, RFC, sueldo, porcentaje));
     }
 
     //AGREGAR EMPLEADO SIN RFC
@@ -101,6 +101,17 @@ public class ManejaPersonas {
         for (Persona persona : personas) {
                     if (persona != null) {
                         if (persona instanceof Cliente) {
+                            return true;
+                        }
+                    }
+                }
+        return false;
+    }
+    
+    public boolean hayEmpleados(){
+        for (Persona persona : personas) {
+                    if (persona != null) {
+                        if (persona instanceof Empleado) {
                             return true;
                         }
                     }

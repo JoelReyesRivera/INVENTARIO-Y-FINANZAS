@@ -67,6 +67,7 @@ public class Ejecutar {
     public void vender(ManejaPersonas manejaPersona, ManejaInventario ManejaInventarios, ManejaVentas Manejaventas, Fecha f) {
 
         int cR, SKU;
+        int idEmpleadoA, posIdEmpleadoA;
         String nombreCliente = "", apellidoCliente = "", rfcCliente = "";
         long telefonoCliente = 0;
         int idCliente = 0;
@@ -86,14 +87,26 @@ public class Ejecutar {
                     if (ManejaInventarios.inventario.isEmpty()) {
                         System.out.println("\n\033[31mNO HAY PRODUCTOS REGISTRADOS, NO ES POSIBLE VENDER.\033[34m");
                     } else {
+                        if (!manejaPersona.hayEmpleados()) {
+                            System.out.println("\033[31mNO HAY EMPLEADOS REGISTRADOS, NO ES POSIBLE REALIZAR VENTA.\n\033[34m");
+                            return;
+                        }
                         System.out.println("\n- INGRESE LOS DATOS DE LA VENTA -\n");
+                        do {
+                            System.out.println("INGRESE EL EMPLEADO QUE ATIENDE");
+                            idEmpleadoA = Keyboard.readInt();
+                            if (manejaPersona.buscarEmpleado(idEmpleadoA)==-1) {
+                                System.out.println("\033[31mEL ID INGRESADO NO EXISTE.\n\033[34m");
+                            }
+                        } while (manejaPersona.buscarEmpleado(idEmpleadoA)==-1);
+                        System.out.println(((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA)))+"\n");
                         do {
                             System.out.println("EL CLIENTE ESTA REGISTRADO (1.- SI/2.- NO)");
                             cR = Keyboard.readInt();
                             System.out.println("");
                             if (cR == 1) {
                                 if (!manejaPersona.hayClientes()) {
-                                    System.out.println("NO HAY CLIENTES REGISTRADOS");
+                                    System.out.println("\033[31mNO HAY CLIENTES REGISTRADOS, NO ES POSIBLE REALIZAR VENTA.\n\033[34m");
                                     return;
                                 } 
                                 do {
@@ -177,16 +190,30 @@ public class Ejecutar {
                                 System.out.println("LA CANTIDAD A COMPRAR DEBE SER MAYOR A 0");
                             }
                         }while (p < 1);
+                        
+                        float monto= (float) (ManejaInventarios.inventario.get(pos).getPrecioUni()*p);
+                        
+                        // ADICIONES A EMPLEADO
+                        ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA))).aumentaVentas();
+                        ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA))).aumentaComisiones((float) (monto*((Empleado)manejaPersona.personas.get(manejaPersona.buscarEmpleado(idEmpleadoA))).getPorcentaje()));
+                       
                         ManejaInventarios.inventario.get(pos).setExistencia(ManejaInventarios.inventario.get(pos).getExistencia() - p);
                         if (cR==1) {
                             Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(pos).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (idCliente));
-                             ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(idCliente))).aumentarCompras();
+                            ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(idCliente))).aumentarCompras();
                         }
                         else{
                             Manejaventas.Agregar(CV, SKU, p, ManejaInventarios.inventario.get(pos).getPrecioUni(), f.getDia(), f.getMes(), f.getAño(), (Cliente.contador));
                             ((Cliente) manejaPersona.personas.get(manejaPersona.buscarCliente(Cliente.contador))).aumentarCompras(); 
                         }
-                       
+                        
+                        System.out.println("\nLA EXISTENCIA DEL PRODUCTO A CAMBIADO A "+ManejaInventarios.inventario.get(pos).getExistencia()+"\n");
+                        
+                        System.out.println("\033[32mVENTA REALIZADA CON EXITO\033[34m");
+                        
+                        // IMPRESION DE DATOS DE VENTA
+                        System.out.println(Manejaventas.Ventas.get(Manejaventas.buscarVenta(CV)));
+                        
                     }
                     break;
                 case 2:
@@ -588,7 +615,7 @@ public class Ejecutar {
                      apellido,
                      RFC;
                     long telefono;
-                    double sueldo;
+                    double sueldo, porcentaje;
                     System.out.println("\nINGRESA LOS DATOS DEL EMPLEADO POR AGREGAR\n");
                     do {
                         System.out.println("NOMBRE");
@@ -625,7 +652,15 @@ public class Ejecutar {
                             System.out.println("\033[31mSUELDO INVALIDO\033[34m");
                         }
                     } while (Double.isNaN(sueldo) || sueldo < 0);
-                    manejaPersona.agregar(nombre, apellido, telefono, RFC, sueldo);
+                    do {
+                        System.out.println("PORCENTAJE POR VENTA");
+                        porcentaje = Keyboard.readDouble();
+                        if (Double.isNaN(porcentaje) || porcentaje>100) {
+                            System.out.println("\033[31mPORCENTAJE POR VENTA INVALIDO\033[34m");
+                        }
+                    } while (Double.isNaN(porcentaje) || porcentaje>100);
+                    porcentaje=porcentaje/100;
+                    manejaPersona.agregar(nombre, apellido, telefono, RFC, sueldo, porcentaje);
                     System.out.println("\n\033[32mEMPLEADO AGREGADO CORRECTAMENTE\033[34m");
                     int posEA = manejaPersona.buscarEmpleado(contEA);
                     System.out.println(manejaPersona.personas.get(posEA));
