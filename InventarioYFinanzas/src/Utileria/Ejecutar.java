@@ -205,17 +205,20 @@ public class Ejecutar {
                                 CV="";
                             }
                         } while (CV.trim().isEmpty());
+                       
                         do {
                             System.out.println("¿CUANTOS PRODUCTOS DESEA COMPRAR?");
                             p = Keyboard.readInt();
-                            if (p > ManejaInventarios.inventario.get(SKU).getExistencia()) {
-                                System.out.println("EXISTENCIA INSUFICIENTE, CONTAMOS CON: " + ManejaInventarios.inventario.get(SKU).getExistencia());
-                                p=0;
-                            }
-                            if (p<1) {
+                            if (p < 1) {
                                 System.out.println("LA CANTIDAD A COMPRAR DEBE SER MAYOR A 0");
                             }
-                        }while (p < 1);
+                            try{
+                                StockNotAvaibleException.ValidaExistencia(ManejaInventarios.inventario.get(SKU).getExistencia()-p);
+                            }catch (StockNotAvaibleException e) {
+                                System.out.println(e.getMessage());
+                                p=-1;
+                            }
+                        } while (p < 1);
                         
                         float monto= (float) (ManejaInventarios.inventario.get(SKU).getPrecioUni()*p);
                         
