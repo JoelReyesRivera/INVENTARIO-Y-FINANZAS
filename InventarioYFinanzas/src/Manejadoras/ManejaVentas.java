@@ -33,12 +33,28 @@ public class ManejaVentas {
         }
         return posicion;
     }
+     
     //IMPRIMIR
-   public void Imprimir(){ 
-       for(int i=0;i<Ventas.size();i++){
-           System.out.println("VENTA NUMERO :"+(i + 1)+ "\n" + Ventas.get(i));
-           System.out.println("---");
-       }
+   public void Imprimir() {
+        for (int i = 0; i < Ventas.size(); i++) {
+            System.out.println("VENTA NUMERO :" + (i + 1) + "\n" + Ventas.get(i));
+            System.out.println("---");
+        }
+    }
+   
+    //BORRAR
+    public void Borrar(String ClaveVta, ManejaInventario ManejaInventarios, ManejaPersonas manejaPersona) {
+        for (int i = 0; i < Ventas.size(); i++) {
+            double monto = (ManejaInventarios.inventario.get(Ventas.get(i).getCSKUArt()).getPrecioUni() * Ventas.get(i).getCantidad());
+            if (Ventas.get(i).getClaveVta().equals(ClaveVta));
+            {
+                Ventas.remove(Ventas.get(i));
+                int a = ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(Ventas.get(i).getIdEmpleado()))).getVentas();
+                ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(Ventas.get(i).getIdEmpleado()))).setVentas(a - 1);
+                double b=(monto * ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(Ventas.get(i).getIdEmpleado()))).getPorcentaje());
+                ((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(Ventas.get(i).getIdEmpleado()))).setComisiones(((Empleado) manejaPersona.personas.get(manejaPersona.buscarEmpleado(Ventas.get(i).getIdEmpleado()))).getComisiones()-b);
+            }
+        }
    }
 }
    

@@ -5,7 +5,7 @@ public class Empleado extends Persona {
     private int idEmpleado;
     private double sueldo;
     private int ventas;
-    private float comisiones;
+    private double comisiones;
     private double porcentaje;
     private static int contIdE = 1;
 
@@ -55,12 +55,20 @@ public class Empleado extends Persona {
         this.ventas++;
     }
 
-    public float getComisiones() {
+    public double getComisiones() {
         return comisiones;
+    }
+    
+    public void setComisiones(double comisiones){
+        this.comisiones=comisiones;
     }
 
     public void aumentaComisiones(float comision) {
         this.comisiones += comision;
+    }
+    
+    public void setVentas(int Ventas){
+        this.ventas=Ventas;
     }
 
     public double getPorcentaje() {

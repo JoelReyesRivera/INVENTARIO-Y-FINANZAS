@@ -80,6 +80,7 @@ public class Ejecutar {
             System.out.println("1.- VENDER ARTICULO");
             System.out.println("2.- MOSTRAR LAS VENTAS");
             System.out.println("3.- MODIFICAR LA CANTIDAD");
+            System.out.println("4.- BORRAR VENTA");
             System.out.println("\033[33m0.- SALIR\033[34m");
             
             opcion = Keyboard.readInt();
@@ -153,7 +154,7 @@ public class Ejecutar {
                         } while (cR < 1 || cR > 2);
                         System.out.println("\nINGRESE EL SKU A VENDER.");
                         SKU = Keyboard.readInt();
-                        if (ManejaInventarios.inventario.containsKey(SKU)) {
+                        if (!ManejaInventarios.inventario.containsKey(SKU)) {
                             do {
                                 System.out.println("\033[31mEL SKU INGRESADO NO EXISTE, INGRESE EL SKU DE NUEVO\n");
                                 SKU = Keyboard.readInt();
@@ -225,33 +226,51 @@ public class Ejecutar {
                     int newCant;
                     if (Manejaventas.Ventas.get(0) == null) {
                         System.out.println("*NO HAY VENTAS REGISTRADAS*");
-                    } else{
+                    } else {
                         do {
                             System.out.println("ESCRIBE LA CLAVE DE LA VENTA QUE DESEA MODIFICAR");
                             CVm = Keyboard.readString();
-                            if (Manejaventas.buscarVenta(CVm)==-1) {
+                            if (Manejaventas.buscarVenta(CVm) == -1) {
                                 System.out.println("CLAVE DE VENTA INEXISTENTE");
-                                CVm="";
-                            } else{
-                                int posmV=Manejaventas.buscarVenta(CVm);
-                                int idmAV=Manejaventas.Ventas.get(posmV).getCSKUArt();
-                                ManejaInventarios.inventario.get(idmAV).setExistencia((ManejaInventarios.inventario.get(idmAV).getExistencia())+Manejaventas.Ventas.get(posmV).getCantidad());
+                                CVm = "";
+                            } else {
+                                int posmV = Manejaventas.buscarVenta(CVm);
+                                int idmAV = Manejaventas.Ventas.get(posmV).getCSKUArt();
+                                ManejaInventarios.inventario.get(idmAV).setExistencia((ManejaInventarios.inventario.get(idmAV).getExistencia()) + Manejaventas.Ventas.get(posmV).getCantidad());
                                 do {
                                     System.out.println("\nINGRESE LA NUEVA CANTIDAD");
-                                    newCant=Keyboard.readInt();
-                                    if (newCant<1) {
+                                    newCant = Keyboard.readInt();
+                                    if (newCant < 1) {
                                         System.out.println("CANTIDAD INVALIDA");
                                     }
                                     if (newCant > ManejaInventarios.inventario.get(idmAV).getExistencia()) {
                                         System.out.println("EXISTENCIA INSUFICIENTE, CONTAMOS CON: " + ManejaInventarios.inventario.get(idmAV).getExistencia());
                                         p = 0;
                                     }
-                                } while (newCant<1);
+                                } while (newCant < 1);
                                 Manejaventas.Ventas.get(posmV).setCantidad(newCant);
-                                ManejaInventarios.inventario.get(idmAV).setExistencia((ManejaInventarios.inventario.get(idmAV).getExistencia())-newCant);
+                                ManejaInventarios.inventario.get(idmAV).setExistencia((ManejaInventarios.inventario.get(idmAV).getExistencia()) - newCant);
                             }
                         } while (CVm.trim().isEmpty());
                     }
+                    break;
+                case 4:
+                    if (Manejaventas.Ventas.get(0) == null) {
+                        System.out.println("*NO HAY VENTAS REGISTRADAS*");
+                    } else {
+                        do {
+                            System.out.println("ESCRIBE LA CLAVE DE LA VENTA QUE DESEA BORRAR");
+                            CVm = Keyboard.readString();
+                            if (Manejaventas.buscarVenta(CVm) == -1) {
+                                System.out.println("CLAVE DE VENTA INEXISTENTE");
+                                CVm = "";
+                            } else {
+                                Manejaventas.Borrar(CVm,ManejaInventarios,manejaPersona);
+                                System.out.println("\n\033[32mBENTA ELIMINADO CORRECTAMENTE\033[34m");
+                            }
+                        } while (CVm.trim().isEmpty());
+                    }
+                    break;
                 case 0:
                     break;
                 default:
@@ -293,7 +312,7 @@ public class Ejecutar {
                 case 3:
                     System.out.println("");
                     ManejaFinanza.imprimirNominaEmpleados(manejaPersona);
-                    System.out.println("\nLA NOMINA TOTAL ES DE $"+ManejaFinanza.calcularNomina(manejaPersona)+" MXN");
+                    System.out.println("\nLA NOMINA TOTAL ES DE $" + ManejaFinanza.calcularNomina(manejaPersona) + " MXN");
                     break;
                 case 0:
                     break;
