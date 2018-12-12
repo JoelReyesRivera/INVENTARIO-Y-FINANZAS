@@ -33,7 +33,17 @@ public class ManejaPersonas {
     public void agregar(String nombre, String apellido, long telefono) {
         personas.add(new Cliente(nombre, apellido, telefono));
     }
+    
+    // AGREGAR CLIENTE (ARCHIVOS)
+    public void agregar(int idCliente, int totalCompras, String nombre, String apellido, long telefono, String RFC){
+        personas.add(new Cliente(idCliente, totalCompras, nombre, apellido, telefono, RFC));
+    }
 
+    // AGREGAR EMPLEADO (ARCHIVOS)
+    public void agregar(int idEmpleado, double sueldo, int ventas, double comisiones, double porcentaje, String nombre, String apellido, long telefono, String RFC){
+        personas.add(new Empleado(idEmpleado, sueldo, ventas, comisiones, porcentaje, nombre, apellido, telefono, RFC));
+    }
+    
     //BUSCAR CLIENTE
     public int buscarCliente(int clave) {
         int posicion = -1;
@@ -45,7 +55,6 @@ public class ManejaPersonas {
                     }
                 }
             }
-
         }
         return posicion;
     }

@@ -1,6 +1,10 @@
 package ClasesBase;
 
-public class Empleado extends Persona {
+import java.io.Serializable;
+
+public class Empleado extends Persona implements Serializable{
+    
+    private static final long serialVersionUID = 666L;
 
     private int idEmpleado;
     private double sueldo;
@@ -17,6 +21,17 @@ public class Empleado extends Persona {
         this.comisiones=0;
         this.porcentaje=porcentaje;
         contIdE++;
+    }
+
+    // Constructor archivos
+    
+    public Empleado(int idEmpleado, double sueldo, int ventas, double comisiones, double porcentaje, String nombre, String apellido, long telefono, String RFC) {
+        super(nombre, apellido, telefono, RFC);
+        this.idEmpleado = idEmpleado;
+        this.sueldo = sueldo;
+        this.ventas = ventas;
+        this.comisiones = comisiones;
+        this.porcentaje = porcentaje;
     }
 
     // Sin RFC

@@ -27,7 +27,10 @@ public class Ejecutar {
         ManejaVentas manejaVentas = new ManejaVentas();
         ManejaInventario manejaInventario = new ManejaInventario();
         ManejaArchivos archivos = new ManejaArchivos ("inventario.txt");
+        ManejaArchivos archivoPersonasB = new ManejaArchivos ("personasB.dat");
+        ManejaArchivos archivoPersonas = new ManejaArchivos ("personas.txt");
         archivos.lecturaInventario(manejaInventario);
+        archivoPersonas.lecturaPersonas(manejaPersona);
         Fecha f = new Fecha();
         System.out.println("\033[34m------------ BIENVENIDO ------------\n\033[34m");
         
@@ -35,7 +38,7 @@ public class Ejecutar {
         do {
             System.out.println(manejaVentas.f);
             System.out.println("\033[33m------------------------------------\nINGRESE LA OPCION QUE DESEA REALIZAR\n");
-            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- FINALIZAR DÍA\n0.- SALIR\033[34m");
+            System.out.println("1.- VENDER\n2.- FINANZAS\n3.- ADMINISTRAR PRODUCTOS\n4.- ADMINISTRAR EMPLEADOS\n5.- ADMINISTRAR CLIENTES\n6.- FINALIZAR DÍA\n7.- GUARDAR BINARIO DE PERSONAS\n0.- SALIR\033[34m");
             key = Keyboard.readInt();
             switch (key) {
                 case 1:
@@ -56,8 +59,18 @@ public class Ejecutar {
                 case 6:
                     manejaVentas.f.finalizarDia();
                     break;
+                case 7:
+                    archivoPersonasB.guardarPersonasB(manejaPersona);
+                    break;
+                /* 
+                SIRVE PARA TESTEO
+                case 99:
+                    archivoPersonas.lecturaPersonasB();
+                    break;
+                        */
                 case 0:
                     archivos.guardarInventario(manejaInventario);
+                    archivoPersonas.guardarPersonas(manejaPersona);
                     break;
                 default:
                     System.out.println("\033[31mOPCION INVALIDA\n\033[34m");
@@ -156,7 +169,7 @@ public class Ejecutar {
                         SKU = Keyboard.readInt();
                         if (!ManejaInventarios.inventario.containsKey(SKU)) {
                             do {
-                                System.out.println("\033[31mEL SKU INGRESADO NO EXISTE, INGRESE EL SKU DE NUEVO\n");
+                                System.out.println("\033[31mEL SKU INGRESADO NO EXISTE, INGRESE EL SKU DE NUEVO\n\033[41m");
                                 SKU = Keyboard.readInt();
                             } while (ManejaInventarios.inventario.containsKey(SKU));
                                

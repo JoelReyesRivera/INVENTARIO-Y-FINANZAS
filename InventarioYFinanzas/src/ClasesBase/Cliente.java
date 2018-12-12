@@ -1,6 +1,10 @@
 package ClasesBase;
 
-public class Cliente extends Persona {
+import java.io.Serializable;
+
+public class Cliente extends Persona implements Serializable{
+    
+    private static final long serialVersionUID = 666L;
 
     private int idCliente;
     private int totalCompras;
@@ -10,9 +14,16 @@ public class Cliente extends Persona {
         super(nombre, apellido, telefono, RFC);
         contador++;
         this.idCliente = contador;
-
     }
 
+    // Constructor archivos
+    
+    public Cliente(int idCliente, int totalCompras, String nombre, String apellido, long telefono, String RFC) {
+        super(nombre, apellido, telefono, RFC);
+        this.idCliente = idCliente;
+        this.totalCompras = totalCompras;
+    }
+    
     // Sin RFC
     public Cliente(String nombre, String apellido, long telefono) {
         super(nombre, apellido, telefono);
